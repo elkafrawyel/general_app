@@ -1,7 +1,7 @@
-import 'package:app_widgets_example/config/constants.dart';
-import 'package:app_widgets_example/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:general_app/config/constants.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:vibration/vibration.dart';

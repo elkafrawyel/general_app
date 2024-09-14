@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
-import 'package:app_widgets_example/config/helpers/logging_helper.dart';
-import 'package:app_widgets_example/config/theme/color_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/helpers/logging_helper.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'app_text.dart';

@@ -1,6 +1,6 @@
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_utils/get_utils.dart';
 

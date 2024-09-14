@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../environment.dart';

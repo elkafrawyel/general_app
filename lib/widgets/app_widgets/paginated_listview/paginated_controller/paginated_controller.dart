@@ -1,4 +1,4 @@
-import 'package:app_widgets_example/config/clients/api/api_client.dart';
+import 'package:general_app/config/clients/api/api_client.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/operation_reply.dart';

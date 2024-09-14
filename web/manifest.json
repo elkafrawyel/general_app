@@ -1,6 +1,6 @@
 {
-    "name": "app_widgets_example",
-    "short_name": "app_widgets_example",
+    "name": "general_app",
+    "short_name": "general_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

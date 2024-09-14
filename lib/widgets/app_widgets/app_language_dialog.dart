@@ -1,8 +1,8 @@
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
-import 'package:app_widgets_example/config/extension/space_extension.dart';
-import 'package:app_widgets_example/config/theme/color_extension.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/extension/space_extension.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 
 import '../../config/language/language_model.dart';
 import 'app_text.dart';

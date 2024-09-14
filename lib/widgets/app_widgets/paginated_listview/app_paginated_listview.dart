@@ -1,9 +1,9 @@
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
-import 'package:app_widgets_example/config/extension/space_extension.dart';
-import 'package:app_widgets_example/widgets/app_widgets/app_text.dart';
-import 'package:app_widgets_example/widgets/app_widgets/paginated_listview/paginated_controller/data/config_data.dart';
-import 'package:app_widgets_example/widgets/app_widgets/paginated_listview/paginated_controller/paginated_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/extension/space_extension.dart';
+import 'package:general_app/widgets/app_widgets/app_text.dart';
+import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_controller/data/config_data.dart';
+import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_controller/paginated_controller.dart';
 import 'package:get/get.dart';
 
 class AppPaginatedListview<T> extends StatefulWidget {

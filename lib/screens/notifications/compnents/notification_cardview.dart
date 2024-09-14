@@ -1,8 +1,8 @@
-import 'package:app_widgets_example/config/extension/space_extension.dart';
-import 'package:app_widgets_example/config/helpers/logging_helper.dart';
-import 'package:app_widgets_example/screens/notifications/data/notification_model.dart';
-import 'package:app_widgets_example/widgets/app_widgets/app_text.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/extension/space_extension.dart';
+import 'package:general_app/config/helpers/logging_helper.dart';
+import 'package:general_app/screens/notifications/data/notification_model.dart';
+import 'package:general_app/widgets/app_widgets/app_text.dart';
 
 import '../../../widgets/app_widgets/app_card.dart';
 

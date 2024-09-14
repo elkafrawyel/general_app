@@ -1,6 +1,6 @@
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
-import 'package:app_widgets_example/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../../config/language/language_model.dart';

@@ -1,6 +1,6 @@
-import 'package:app_widgets_example/config/extension/space_extension.dart';
-import 'package:app_widgets_example/widgets/app_widgets/app_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/extension/space_extension.dart';
+import 'package:general_app/widgets/app_widgets/app_shimmer.dart';
 
 import '../../../widgets/app_widgets/app_card.dart';
 

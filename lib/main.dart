@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
-import 'package:app_widgets_example/config/language/language_model.dart';
-import 'package:app_widgets_example/config/theme/color_extension.dart';
-import 'package:app_widgets_example/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/language/language_model.dart';
+import 'package:general_app/config/theme/color_extension.dart';
+import 'package:general_app/screens/home_screen.dart';
 import 'package:get/get.dart';
 
 import 'config/constants.dart';

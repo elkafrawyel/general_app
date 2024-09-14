@@ -1,5 +1,5 @@
-import 'package:app_widgets_example/config/theme/color_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 
 import '../../config/constants.dart';
 

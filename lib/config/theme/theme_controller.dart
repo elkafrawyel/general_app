@@ -1,4 +1,4 @@
-import 'package:app_widgets_example/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:get/get.dart';
 
 import 'app_colors.dart';
