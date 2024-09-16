@@ -2,11 +2,10 @@
 ///fill the type if you intend to return the reply with data
 class OperationReply<ReturnType> {
   OperationStatus status;
-  String message;
+  String? message;
   ReturnType? result;
 
-  OperationReply(this.status,
-      {this.message = "Some thing went wrong", this.result});
+  OperationReply(this.status, {this.message, this.result});
 
   load() => status = OperationStatus.loading;
 

@@ -8,6 +8,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
+import 'package:general_app/config/helpers/offline_handler.dart';
 import 'package:general_app/config/language/language_model.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/home_screen.dart';
@@ -59,7 +60,6 @@ void main() async {
   );
 
   await NotificationsService().init();
-
   FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
   runApp(const MyApp());
 }
@@ -73,6 +73,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final ThemeController themeController = Get.put(ThemeController());
+
+  @override
+  void initState() {
+    super.initState();
+    OfflineHandler.handle();
+  }
 
   @override
   Widget build(BuildContext context) {

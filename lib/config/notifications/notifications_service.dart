@@ -187,10 +187,10 @@ class NotificationsService {
       // update view or go to screen
 
       if (Get.isRegistered<MessagesController>()) {
-        MessagesController messagesController = Get.find<MessagesController>();
-        messagesController.addMessage(
-          remoteMessage.notification!.title!,
-        );
+        // MessagesController messagesController = Get.find<MessagesController>();
+        // messagesController.addMessage(
+        //   remoteMessage.notification!.title!,
+        // );
       } else {
         Get.to(
           () => const MessagesScreen(),

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:general_app/config/constants.dart';
 import 'package:general_app/config/theme/color_extension.dart';
+import 'package:general_app/widgets/app_widgets/app_network_image.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -75,7 +76,12 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
           borderRadius: BorderRadius.all(Radius.circular(kRadius)),
           child: Stack(
             children: <Widget>[
-              Image.network(item, fit: BoxFit.cover, width: 1000.0),
+              AppNetworkImage(
+                imageUrl: item,
+                fit: BoxFit.cover,
+                width: 1000.0,
+                height: 1000.0,
+              ),
               // Positioned(
               //   bottom: 0.0,
               //   left: 0.0,

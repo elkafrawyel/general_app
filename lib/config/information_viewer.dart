@@ -37,12 +37,15 @@ abstract class InformationViewer {
   }
 
   static showToastBasedOnReply(OperationReply reply) {
+    if (reply.message == null) {
+      return;
+    }
     if (reply.isSuccess()) {
-      showSuccessToast(msg: reply.message);
+      showSuccessToast(msg: reply.message!);
     } else if (reply.status == OperationStatus.failed) {
-      showErrorToast(msg: reply.message);
+      showErrorToast(msg: reply.message!);
     } else {
-      showToast(msg: reply.message, backgroundColor: Colors.black);
+      showToast(msg: reply.message!, backgroundColor: Colors.black);
     }
   }
 

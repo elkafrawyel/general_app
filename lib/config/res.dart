@@ -5,4 +5,9 @@ class Res {
   ///========================== ASSETS ======================================
   static const logo = '';
   static const emailIcon = 'assets/icons/email.svg';
+
+  static const loadingAnimation = 'assets/anim/loading.json';
+  static const errorAnimation = 'assets/anim/error.json';
+  static const emptyAnimation = 'assets/anim/empty.json';
+  static const disconnectAnimation = 'assets/anim/disconnect.json';
 }
