@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Messages',
                 onPressed: () {
                   Get.to(
-                    () => MessagesScreen(),
+                    () => const MessagesScreen(),
                     binding: MessagesBinding(),
                   );
                 },
