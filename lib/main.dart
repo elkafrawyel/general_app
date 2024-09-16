@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/helpers/logging_helper.dart';
 import 'package:general_app/config/language/language_model.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/home_screen.dart';
@@ -13,7 +16,9 @@ import 'package:get/get.dart';
 import 'config/constants.dart';
 import 'config/environment.dart';
 import 'config/language/translation.dart';
+import 'config/notifications/notifications_service.dart';
 import 'config/theme/theme_controller.dart';
+import 'firebase_options.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -25,6 +30,12 @@ class MyHttpOverrides extends HttpOverrides {
         int port,
       ) =>
           true;
+  }
+}
+
+Future _firebaseBackgroundMessage(RemoteMessage remoteMessage) async {
+  if (remoteMessage.notification != null) {
+    AppLogger.log('Background Notification Received.');
   }
 }
 
@@ -41,6 +52,14 @@ void main() async {
   );
 
   await StorageClient().init();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await NotificationsService().init();
+
+  FirebaseMessaging.onBackgroundMessage(_firebaseBackgroundMessage);
   runApp(const MyApp());
 }
 

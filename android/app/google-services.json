@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "523032872722",
+    "project_id": "freelancing-project-7ed76",
+    "storage_bucket": "freelancing-project-7ed76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523032872722:android:ed47c6ae7c65b8208f95cb",
+        "android_client_info": {
+          "package_name": "com.bassant.academy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsnJALJrWq3omUMtgvZyKWk4vCDOXQWrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523032872722:android:46e91a161a46f27b8f95cb",
+        "android_client_info": {
+          "package_name": "com.general.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsnJALJrWq3omUMtgvZyKWk4vCDOXQWrA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,6 +7,8 @@ import 'package:general_app/config/helpers/date_helper.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/config/theme/theme_controller.dart';
+import 'package:general_app/screens/messages/controller/messages_binding.dart';
+import 'package:general_app/screens/messages/messages_screen.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
 import 'package:general_app/widgets/app_widgets/app_button.dart';
 import 'package:general_app/widgets/app_widgets/app_checkbox.dart';
@@ -70,6 +72,15 @@ class _HomeScreenState extends State<HomeScreen> {
                      and developing common widgets
                      shared in different applications apps.''',
                 ),
+              ),
+              AppButton(
+                text: 'Messages',
+                onPressed: () {
+                  Get.to(
+                    () => MessagesScreen(),
+                    binding: MessagesBinding(),
+                  );
+                },
               ),
               Row(
                 children: [
