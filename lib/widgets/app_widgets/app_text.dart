@@ -41,6 +41,7 @@ class AppText extends StatelessWidget {
                 : TextDecoration.none,
         decorationThickness: 1,
         decorationColor: color ?? Colors.black,
+        overflow: TextOverflow.ellipsis,
       ),
       textAlign: centerText ? TextAlign.center : TextAlign.start,
       maxLines: maxLines,

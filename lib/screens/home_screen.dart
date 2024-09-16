@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:general_app/config/app_loader.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/helpers/date_helper.dart';
+import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/config/theme/theme_controller.dart';
@@ -11,11 +12,14 @@ import 'package:general_app/screens/messages/controller/messages_binding.dart';
 import 'package:general_app/screens/messages/messages_screen.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
 import 'package:general_app/widgets/app_widgets/app_button.dart';
+import 'package:general_app/widgets/app_widgets/app_carousel_slider.dart';
 import 'package:general_app/widgets/app_widgets/app_checkbox.dart';
+import 'package:general_app/widgets/app_widgets/app_dialogs/logout_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_dropdown_menu.dart';
 import 'package:general_app/widgets/app_widgets/app_image_picker_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_switch.dart';
+import 'package:general_app/widgets/app_widgets/app_listtile.dart';
 import 'package:general_app/widgets/app_widgets/app_network_image.dart';
 import 'package:general_app/widgets/app_widgets/app_radio_button.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
@@ -62,9 +66,48 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(28.0),
+          padding: const EdgeInsets.all(18.0),
           child: Column(
             children: [
+              const AppCarouselSlider(),
+              AppListTile(
+                leading: AppNetworkImage(
+                  isCircular: true,
+                  localFile: image,
+                  imageUrl:
+                      'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
+                ),
+                title: 'New Tile Title',
+                onTap: () {
+                  InformationViewer.showSuccessToast(msg: 'List Tile Clicked');
+                },
+                body: 'New Tile body for the list tile title ',
+              ),
+              Row(
+                children: [
+                  AppButton(
+                    text: 'logOut',
+                    onPressed: () {
+                      showLogoutAlertDialog(context, () {
+                        Get.back();
+                        InformationViewer.showSuccessToast(
+                            msg: 'Logging out of the application');
+                      });
+                    },
+                  ),
+                  10.pw,
+                  AppButton(
+                    text: 'delete account',
+                    onPressed: () {
+                      showDeleteAccountAlertDialog(context, () {
+                        Get.back();
+                        InformationViewer.showSuccessToast(
+                            msg: 'Deleting your account');
+                      });
+                    },
+                  ),
+                ],
+              ),
               const Padding(
                 padding: EdgeInsets.all(8.0),
                 child: AppText(
@@ -129,12 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   showAppLanguageDialog(context: context);
                 },
-              ),
-              AppNetworkImage(
-                isCircular: true,
-                localFile: image,
-                imageUrl:
-                    'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
               ),
               AppButton(
                 text: 'Choose Picture',
