@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:general_app/config/app_loader.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/helpers/date_helper.dart';
+import 'package:general_app/config/helpers/url_launcher_helper.dart';
 import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
@@ -82,6 +83,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   InformationViewer.showSuccessToast(msg: 'List Tile Clicked');
                 },
                 body: 'New Tile body for the list tile title ',
+              ),
+              Row(
+                children: [
+                  AppButton(
+                    text: 'Call',
+                    onPressed: () {
+                      UrlLauncherHelper.makePhoneCall('01019744661');
+                    },
+                  ),
+                  10.pw,
+                  AppButton(
+                    text: 'Launch Url',
+                    onPressed: () {
+                      UrlLauncherHelper.openLink('https://www.google.com');
+                    },
+                  ),
+                ],
               ),
               Row(
                 children: [
