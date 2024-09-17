@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+// only use on StatefulHookWidget not StatefulWidget
 Widget useFadeInSlideAnimationHook({
   required Widget child,
   Duration? duration,

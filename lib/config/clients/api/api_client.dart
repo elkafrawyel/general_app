@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
+import 'package:general_app/config/helpers/logging_helper.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../environment.dart';
@@ -46,6 +46,9 @@ class APIClient {
         requestBody: true,
         requestHeader: true,
         error: true,
+        logPrint: (Object object) {
+          AppLogger.log(object);
+        },
         maxWidth: 1000,
       ),
     );
@@ -117,14 +120,14 @@ class APIClient {
             if (onDownloadProgress != null) {
               onDownloadProgress((received / total));
             }
-            debugPrint('Downloading ....$percentage');
+            AppLogger.log('Downloading ....$percentage');
           },
           onSendProgress: (sent, total) {
             int percentage = ((sent / total) * 100).floor();
             if (onUploadProgress != null) {
               onUploadProgress((sent / total));
             }
-            debugPrint('Uploading ....$percentage');
+            AppLogger.log('Uploading ....$percentage');
           },
         );
         if (NetworkHelper.isSuccess(response)) {
@@ -168,11 +171,11 @@ class APIClient {
           data: haveFiles ? formData : requestBody,
           onReceiveProgress: (received, total) {
             int percentage = ((received / total) * 100).floor();
-            debugPrint('Downloading ....$percentage');
+            AppLogger.log('Downloading ....$percentage');
           },
           onSendProgress: (sent, total) {
             int percentage = ((sent / total) * 100).floor();
-            debugPrint('Uploading ....$percentage');
+            AppLogger.log('Uploading ....$percentage');
           },
         );
         if (NetworkHelper.isSuccess(response)) {

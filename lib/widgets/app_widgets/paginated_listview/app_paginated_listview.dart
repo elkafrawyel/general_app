@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
@@ -6,11 +7,11 @@ import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_con
 import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_controller/paginated_controller.dart';
 import 'package:get/get.dart';
 
-class AppPaginatedListview<T> extends StatefulWidget {
+class AppPaginatedListview<T> extends StatefulHookWidget {
   final Widget Function(T item) child;
   final Widget? shimmerLoading;
   final Widget? emptyView;
-  final ConfigData configData;
+  final ConfigData<T> configData;
 
   const AppPaginatedListview({
     super.key,
@@ -29,14 +30,9 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
   final ScrollController _scrollController = ScrollController();
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GetBuilder<PaginationController>(
-      init: PaginationController(
+    return GetBuilder<PaginationController<T>>(
+      init: PaginationController<T>(
         widget.configData,
       ),
       dispose: (state) {

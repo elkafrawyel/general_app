@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:general_app/config/theme/color_extension.dart';
-import 'package:general_app/screens/notifications/compnents/notification_cardview.dart';
-import 'package:general_app/screens/notifications/compnents/shimmer_notification_cardview.dart';
+import 'package:general_app/screens/notifications/components/notification_cardview.dart';
+import 'package:general_app/screens/notifications/components/shimmer_notification_cardview.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
 import 'package:general_app/widgets/app_widgets/paginated_listview/app_paginated_listview.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../config/res.dart';
 import '../../widgets/app_widgets/paginated_listview/paginated_controller/data/config_data.dart';
 import 'data/notification_model.dart';
 
-class NotificationsScreen extends StatefulWidget {
+class NotificationsScreen extends StatefulHookWidget {
   const NotificationsScreen({super.key});
 
   @override
@@ -27,9 +29,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: AppPaginatedListview<NotificationModel>(
-          configData: ConfigData(
+          configData: ConfigData<NotificationModel>(
             apiEndPoint: Res.apiNotifications,
-            // emptyListMessage: 'empty_notifications'.tr,
+            emptyListMessage: 'empty_notifications'.tr,
             fromJson: NotificationModel.fromJson,
             isPostRequest: true,
           ),
