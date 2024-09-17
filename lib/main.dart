@@ -8,10 +8,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
-import 'package:general_app/config/helpers/offline_handler.dart';
 import 'package:general_app/config/language/language_model.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/home_screen.dart';
+import 'package:general_app/widgets/app_widgets/app_offline_handler.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 
@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    OfflineHandler.handle();
+    // OfflineHandler.handle();
   }
 
   @override
@@ -106,7 +106,7 @@ class _MyAppState extends State<MyApp> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: const HomeScreen(),
+          home: const AppOfflineHandler(child: HomeScreen()),
           builder: (context, child) {
             child = EasyLoading.init()(context, child);
             EasyLoading.instance
