@@ -8,7 +8,7 @@ import 'package:general_app/widgets/hooks/animation/slide_animation_hook.dart';
 
 import '../../widgets/app_widgets/app_appbar.dart';
 import '../../widgets/app_widgets/app_text.dart';
-import '../../widgets/hooks/infint_timer_hook.dart';
+import '../../widgets/hooks/infinte_timer_hook.dart';
 
 class HooksScreen extends StatefulHookWidget {
   const HooksScreen({super.key});
