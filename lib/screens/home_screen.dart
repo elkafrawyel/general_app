@@ -9,6 +9,7 @@ import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/config/theme/theme_controller.dart';
+import 'package:general_app/screens/hooks/hooks_screen.dart';
 import 'package:general_app/screens/messages/controller/messages_binding.dart';
 import 'package:general_app/screens/messages/messages_screen.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
@@ -83,6 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   InformationViewer.showSuccessToast(msg: 'List Tile Clicked');
                 },
                 body: 'New Tile body for the list tile title ',
+              ),
+              AppButton(
+                text: 'Hooks Screen',
+                onPressed: () {
+                  Get.to(() => const HooksScreen());
+                },
               ),
               Row(
                 children: [

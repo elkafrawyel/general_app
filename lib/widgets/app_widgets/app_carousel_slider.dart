@@ -80,7 +80,7 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
                 imageUrl: item,
                 fit: BoxFit.cover,
                 width: 1000.0,
-                height: 1000.0,
+                height: 300.0,
               ),
               // Positioned(
               //   bottom: 0.0,
