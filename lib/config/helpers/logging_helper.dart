@@ -18,7 +18,7 @@ class AppLogger {
           dateTimeFormat: DateTimeFormat.none,
           noBoxingByDefault: true),
     ).log(
-      level ?? Level.warning,
+      level ?? Level.info,
       message,
     );
   }

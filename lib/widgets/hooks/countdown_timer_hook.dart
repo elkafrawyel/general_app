@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
 
 Widget useCountDownTimer(

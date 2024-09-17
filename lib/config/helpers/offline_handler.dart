@@ -1,6 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
-import 'package:general_app/screens/home_screen.dart';
 import 'package:general_app/widgets/app_data_state/app_disconnect_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';

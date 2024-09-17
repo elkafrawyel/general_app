@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:general_app/config/clients/api/api_client.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
-import 'package:get/get.dart';
 
 class LanguageData {
   static const supportedLocales = [Locale('en', 'US'), Locale('ar', 'SA')];
@@ -13,10 +14,7 @@ class LanguageData {
       .where(
         (element) =>
             element.languageCode.toLowerCase() ==
-            (
-              Get.locale?.languageCode.toLowerCase() ??
-                  Get.deviceLocale!.languageCode.toLowerCase(),
-            ),
+            Get.locale!.languageCode.toLowerCase(),
       )
       .first;
 
