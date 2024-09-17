@@ -1,10 +1,11 @@
-import 'package:firebase_messaging_platform_interface/src/remote_message.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:general_app/screens/messages/controller/messages_controller.dart';
 import 'package:general_app/widgets/app_data_state/handel_api_state.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
-import 'package:get/get.dart';
 
 import '../../config/notifications/notification_mixin.dart';
 
