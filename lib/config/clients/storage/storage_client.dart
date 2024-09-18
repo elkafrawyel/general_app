@@ -1,3 +1,4 @@
+import 'package:general_app/config/clients/api/api_client.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -38,7 +39,7 @@ class StorageClient {
 
   Future<void> signOut() async {
     await _box.erase();
-    // Get.find<AppConfigController>().isLoggedIn.value = false;
-    // APIProvider.instance.updateTokenHeader(null);
+    // Get.offAll(()=>LoginScreen());
+    APIClient.instance.updateTokenHeader(null);
   }
 }

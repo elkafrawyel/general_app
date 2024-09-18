@@ -47,7 +47,7 @@ class APIClient {
         requestHeader: true,
         error: true,
         logPrint: (Object object) {
-          AppLogger.log(object);
+          AppLogger.getxLog(object.toString());
         },
         maxWidth: 1000,
       ),

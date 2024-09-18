@@ -22,7 +22,7 @@ class NotificationCardView extends StatelessWidget {
       },
       child: AppCard(
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(38.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

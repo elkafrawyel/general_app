@@ -1,3 +1,4 @@
+import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 
 class AppLogger {
@@ -21,5 +22,9 @@ class AppLogger {
       level ?? Level.info,
       message,
     );
+  }
+
+  static void getxLog(String message) {
+    Get.log(message);
   }
 }

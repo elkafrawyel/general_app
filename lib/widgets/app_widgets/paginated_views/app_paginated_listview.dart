@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/extension/space_extension.dart';
+import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
-import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_controller/data/config_data.dart';
-import 'package:general_app/widgets/app_widgets/paginated_listview/paginated_controller/paginated_controller.dart';
+import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/data/config_data.dart';
+import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/paginated_controller.dart';
 import 'package:get/get.dart';
 
 class AppPaginatedListview<T> extends StatefulHookWidget {
@@ -105,6 +106,9 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
               text: StorageClient().isAr()
                   ? 'يتم تحميل مزيد من البيانات'
                   : 'Loading more data from',
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: context.kHintTextColor,
             ),
           ],
         ),
@@ -115,6 +119,9 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
           text: StorageClient().isAr()
               ? 'لا يوجد المزيد من البيانات'
               : 'End of the data',
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          color: context.kHintTextColor,
         ),
       );
 }

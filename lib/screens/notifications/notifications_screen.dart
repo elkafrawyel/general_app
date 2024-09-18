@@ -4,11 +4,12 @@ import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/notifications/components/notification_cardview.dart';
 import 'package:general_app/screens/notifications/components/shimmer_notification_cardview.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
-import 'package:general_app/widgets/app_widgets/paginated_listview/app_paginated_listview.dart';
+import 'package:general_app/widgets/app_widgets/paginated_views/app_paginated_gridview.dart';
+import 'package:general_app/widgets/app_widgets/paginated_views/app_paginated_listview.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 import '../../config/res.dart';
-import '../../widgets/app_widgets/paginated_listview/paginated_controller/data/config_data.dart';
+import '../../widgets/app_widgets/paginated_views/paginated_controller/data/config_data.dart';
 import 'data/notification_model.dart';
 
 class NotificationsScreen extends StatefulHookWidget {
@@ -38,6 +39,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           child: (NotificationModel item) => NotificationCardView(
             notificationModel: item,
           ),
+          // crossAxisCount: 2,
           shimmerLoading: const ShimmerNotificationCardView(),
           emptyView: Center(
             child: Icon(
