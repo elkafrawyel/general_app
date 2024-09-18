@@ -4,7 +4,6 @@ import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/notifications/components/notification_cardview.dart';
 import 'package:general_app/screens/notifications/components/shimmer_notification_cardview.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
-import 'package:general_app/widgets/app_widgets/paginated_views/app_paginated_gridview.dart';
 import 'package:general_app/widgets/app_widgets/paginated_views/app_paginated_listview.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
