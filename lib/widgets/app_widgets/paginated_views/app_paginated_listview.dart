@@ -56,6 +56,8 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
                 child: CircularProgressIndicator.adaptive(),
               )
             : RefreshIndicator(
+                backgroundColor: context.kPrimaryColor,
+                color: context.kColorOnPrimary,
                 onRefresh: controller.refreshApiCall,
                 child: controller.operationReply.isEmpty()
                     ? widget.emptyView ?? const SizedBox()

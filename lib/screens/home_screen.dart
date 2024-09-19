@@ -26,6 +26,7 @@ import 'package:general_app/widgets/app_widgets/app_network_image.dart';
 import 'package:general_app/widgets/app_widgets/app_radio_button.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
 import 'package:general_app/widgets/app_widgets/app_text_field/app_text_field.dart';
+import 'package:general_app/widgets/app_widgets/app_webview.dart';
 import 'package:get/get.dart';
 
 import '../config/helpers/logging_helper.dart';
@@ -104,6 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Launch Url',
                     onPressed: () {
                       UrlLauncherHelper.openLink('https://www.google.com');
+                    },
+                  ),
+                  10.pw,
+                  AppButton(
+                    text: 'Open Url',
+                    onPressed: () {
+                      Get.to(
+                        () => const AppWebview(
+                            title: 'Google', url: 'https://www.google.com'),
+                      );
                     },
                   ),
                 ],
