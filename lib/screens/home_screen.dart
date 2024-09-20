@@ -16,6 +16,8 @@ import 'package:general_app/widgets/app_widgets/app_appbar.dart';
 import 'package:general_app/widgets/app_widgets/app_button.dart';
 import 'package:general_app/widgets/app_widgets/app_carousel_slider.dart';
 import 'package:general_app/widgets/app_widgets/app_checkbox.dart';
+import 'package:general_app/widgets/app_widgets/app_chips_multi_choice.dart';
+import 'package:general_app/widgets/app_widgets/app_chips_single_choice.dart';
 import 'package:general_app/widgets/app_widgets/app_dialogs/logout_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_dropdown_menu.dart';
 import 'package:general_app/widgets/app_widgets/app_image_picker_dialog.dart';
@@ -118,6 +120,28 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ],
+              ),
+              AppChipsMultiChoice<String>(
+                choices: const [
+                  'Google',
+                  'Facebook',
+                  'Twitter',
+                  'tiktok',
+                ],
+                onSelectedChoicesChanged: (List<String> selectedChoices) {
+                  AppLogger.log(selectedChoices);
+                },
+              ),
+              AppChipsSingleChoice<String>(
+                choices: const [
+                  'Google',
+                  'Facebook',
+                  'Twitter',
+                  'tiktok',
+                ],
+                onSelectedChoiceChanged: (String? selectedChoice) {
+                  AppLogger.log(selectedChoice);
+                },
               ),
               Row(
                 children: [
