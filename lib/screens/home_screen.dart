@@ -13,6 +13,7 @@ import 'package:general_app/screens/hooks/hooks_screen.dart';
 import 'package:general_app/screens/messages/controller/messages_binding.dart';
 import 'package:general_app/screens/messages/messages_screen.dart';
 import 'package:general_app/widgets/app_widgets/app_appbar.dart';
+import 'package:general_app/widgets/app_widgets/app_bottom_nav.dart';
 import 'package:general_app/widgets/app_widgets/app_button.dart';
 import 'package:general_app/widgets/app_widgets/app_carousel_slider.dart';
 import 'package:general_app/widgets/app_widgets/app_checkbox.dart';
@@ -23,7 +24,7 @@ import 'package:general_app/widgets/app_widgets/app_dropdown_menu.dart';
 import 'package:general_app/widgets/app_widgets/app_image_picker_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_switch.dart';
-import 'package:general_app/widgets/app_widgets/app_listtile.dart';
+import 'package:general_app/widgets/app_widgets/app_list_tile.dart';
 import 'package:general_app/widgets/app_widgets/app_network_image.dart';
 import 'package:general_app/widgets/app_widgets/app_radio_button.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
@@ -68,6 +69,16 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: AppBottomNav(
+        navBarItems: [
+          NavBarItem(text: 'Home', assetName: Res.emailIcon),
+          NavBarItem(text: 'Messages', assetName: Res.emailIcon),
+          NavBarItem(text: 'Orders', assetName: Res.emailIcon),
+          NavBarItem(text: 'Notifications', assetName: Res.emailIcon),
+          NavBarItem(text: 'Menu', assetName: Res.emailIcon),
+        ],
+        onTap: (int index) {},
       ),
       body: SingleChildScrollView(
         child: Padding(
