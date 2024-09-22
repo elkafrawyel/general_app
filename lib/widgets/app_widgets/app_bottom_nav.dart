@@ -31,52 +31,80 @@ class AppBottomNav extends StatefulWidget {
   State<AppBottomNav> createState() => _AppBottomNavState();
 }
 
-class _AppBottomNavState extends State<AppBottomNav> {
+class _AppBottomNavState extends State<AppBottomNav>
+    with WidgetsBindingObserver {
   int _index = 0;
+  bool _isKeyboardVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Add the WidgetsBindingObserver to the current state
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // Remove the WidgetsBindingObserver when the state is disposed
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    // Check the keyboard visibility when the metrics change
+    final bottomInset = View.of(context).viewInsets.bottom;
+    setState(() {
+      _isKeyboardVisible = bottomInset > 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      type: BottomNavigationBarType.fixed,
-      elevation: 5.0,
-      backgroundColor: context.kBackgroundColor,
-      currentIndex: _index,
-      items: widget.navBarItems
-          .map(
-            (navItem) => BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                navItem.assetName,
-                width: 25,
-                height: 25,
-                colorFilter: ColorFilter.mode(
-                  _index == widget.navBarItems.indexOf(navItem)
-                      ? context.kPrimaryColor
-                      : context.kHintTextColor,
-                  BlendMode.srcIn,
-                ),
-              ),
-              label: navItem.text,
+    return _isKeyboardVisible
+        ? const SizedBox()
+        : BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            elevation: 5.0,
+            backgroundColor: context.kBackgroundColor,
+            currentIndex: _index,
+            items: widget.navBarItems
+                .map(
+                  (navItem) => BottomNavigationBarItem(
+                    icon: SvgPicture.asset(
+                      navItem.assetName,
+                      width: 25,
+                      height: 25,
+                      colorFilter: ColorFilter.mode(
+                        _index == widget.navBarItems.indexOf(navItem)
+                            ? context.kPrimaryColor
+                            : context.kHintTextColor,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    label: navItem.text,
+                  ),
+                )
+                .toList(),
+            selectedItemColor: context.kPrimaryColor,
+            selectedLabelStyle: TextStyle(
+              color: context.kPrimaryColor,
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
             ),
-          )
-          .toList(),
-      selectedItemColor: context.kPrimaryColor,
-      selectedLabelStyle: TextStyle(
-        color: context.kPrimaryColor,
-        fontSize: 15,
-        fontWeight: FontWeight.w700,
-      ),
-      unselectedItemColor: context.kHintTextColor,
-      unselectedLabelStyle: TextStyle(
-        color: context.kHintTextColor,
-        fontSize: 13,
-        fontWeight: FontWeight.w200,
-      ),
-      onTap: (int index) {
-        setState(() {
-          _index = index;
-        });
+            unselectedItemColor: context.kHintTextColor,
+            unselectedLabelStyle: TextStyle(
+              color: context.kHintTextColor,
+              fontSize: 13,
+              fontWeight: FontWeight.w200,
+            ),
+            onTap: (int index) {
+              setState(() {
+                _index = index;
+              });
 
-        widget.onTap(index);
-      },
-    );
+              widget.onTap(index);
+            },
+          );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 
 import 'app_text.dart';
@@ -14,6 +15,7 @@ class AppDropDownMenu<T> extends StatefulWidget {
   final Color? backgroundColor;
   final bool centerHint;
   final String? validationText;
+  final Widget? leading;
 
   const AppDropDownMenu({
     super.key,
@@ -27,6 +29,7 @@ class AppDropDownMenu<T> extends StatefulWidget {
     this.backgroundColor,
     this.centerHint = false,
     this.validationText,
+    this.leading,
   });
 
   @override
@@ -113,8 +116,15 @@ class AppDropDownMenuState<T> extends State<AppDropDownMenu<T>> {
                         .map(
                           (e) => DropdownMenuItem<T>(
                             value: widget.items[widget.items.indexOf(e)],
-                            child: AppText(
-                              text: e.toString(),
+                            child: Row(
+                              children: [
+                                widget.leading ?? const SizedBox(),
+                                Expanded(
+                                  child: AppText(
+                                    text: e.toString(),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         )

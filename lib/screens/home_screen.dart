@@ -26,6 +26,7 @@ import 'package:general_app/widgets/app_widgets/app_image_picker_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_language_switch.dart';
 import 'package:general_app/widgets/app_widgets/app_list_tile.dart';
+import 'package:general_app/widgets/app_widgets/app_modal_bottom_sheet.dart';
 import 'package:general_app/widgets/app_widgets/app_network_image.dart';
 import 'package:general_app/widgets/app_widgets/app_radio_button.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
@@ -53,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: context.kBackgroundColor,
       appBar: AppAppbar(
         title: 'Flutter Common Widgets',
@@ -104,6 +106,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Hooks Screen',
                 onPressed: () {
                   Get.to(() => const HooksScreen());
+                },
+              ),
+              AppButton(
+                text: 'Show Bottom Sheet',
+                onPressed: () {
+                  _showBottomSheet(context);
                 },
               ),
               Row(
@@ -222,6 +230,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               AppDropDownMenu(
                 hint: 'Select Country',
+                // leading: Image.network(
+                // 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/2560px-Flag_of_Canada.svg.png',
+                // ),
                 items: const [
                   'Egypt',
                   'USA',
@@ -229,6 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   'KSA',
                   'US',
                 ],
+                bordered: true,
+                expanded: true,
                 onChanged: (String? value) {},
               ),
               Row(
@@ -321,6 +334,54 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  _showBottomSheet(BuildContext context) {
+    showAppModalBottomSheet(
+      context: context,
+      maxChildSize: 0.6,
+      initialChildSize: 0.3,
+      minChildSize: 0.2,
+      builder: (context, scrollerController) {
+        final TextEditingController textEditingController =
+            TextEditingController();
+        return Container(
+          color: context.kBackgroundColor,
+          child: SingleChildScrollView(
+            controller: scrollerController,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppText(
+                    text: 'Please Type rejection reason.',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  AppTextFormField(
+                    controller: textEditingController,
+                    hintText: 'Email',
+                  ),
+                  10.ph,
+                  AppTextFormField(
+                    controller: textEditingController,
+                    hintText: 'Rejection Reason',
+                  ),
+                  10.ph,
+                  Center(
+                    child: AppButton(
+                      text: 'Submit',
+                      onPressed: () {},
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
