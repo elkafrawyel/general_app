@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:general_app/config/app_loader.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/helpers/date_helper.dart';
+import 'package:general_app/config/helpers/time_debuncer.dart';
 import 'package:general_app/config/helpers/url_launcher_helper.dart';
 import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
@@ -207,7 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   10.pw,
                   AppButton(
                     onPressed: () {
-                      AppLogger.log('This is a  new log message');
+                      TimeDebuncer.instance.debounce(
+                        const Duration(seconds: 3),
+                        () {
+                          // AppLogger.log('This is a  new log message');
+                          AppLogger.getxLog('Timer Debouncer');
+                        },
+                      );
                     },
                     text: 'Log message',
                   ),
