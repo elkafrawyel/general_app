@@ -6,25 +6,22 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
-import 'package:general_app/screens/messages/controller/messages_binding.dart';
-import 'package:general_app/screens/messages/messages_screen.dart';
 import 'package:get/instance_manager.dart';
 import 'package:get/route_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../screens/messages/controller/messages_controller.dart';
-
 class NotificationsService {
+  static const String _channelId = 'com.general.app';
+  static const String _channelName = 'GeneralApp';
+  static const String _channelDescription =
+      'Bassant Academy channel description';
+
   static final _instance = FirebaseMessaging.instance;
   static final FlutterLocalNotificationsPlugin
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
     await _instance.requestPermission(announcement: true);
-
-    // /// This means that FCM will automatically initialize and
-    // /// retrieve a device token when the app starts.
-    // await _instance.setAutoInitEnabled(true);
 
     await _instance.getToken().then(
           (token) => AppLogger.log('FIREBASE TOKEN : : $token'),
@@ -40,7 +37,7 @@ class NotificationsService {
           AppLogger.log(
             'Initial Notification : : ${remoteMessage.notification?.title}',
           );
-          _handleRemoteMessage(remoteMessage);
+          _handleBackgroundRemoteMessage(remoteMessage);
         }
       }
     });
@@ -49,7 +46,7 @@ class NotificationsService {
       (RemoteMessage remoteMessage) {
         if (remoteMessage.notification != null) {
           AppLogger.log('Background Notification Tapped.');
-          _handleRemoteMessage(remoteMessage);
+          _handleBackgroundRemoteMessage(remoteMessage);
         }
       },
     );
@@ -61,7 +58,7 @@ class NotificationsService {
       (RemoteMessage remoteMessage) {
         AppLogger.log('Got a Foreground Notification.');
         if (remoteMessage.notification != null) {
-          _handleRemoteMessage(remoteMessage);
+          _handleForegroundRemoteMessage(remoteMessage);
         }
       },
     );
@@ -98,8 +95,8 @@ class NotificationsService {
 
     await _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: onNotificationTap,
-      onDidReceiveBackgroundNotificationResponse: onNotificationTap,
+      onDidReceiveNotificationResponse: _onNotificationTap,
+      onDidReceiveBackgroundNotificationResponse: _onNotificationTap,
     );
   }
 
@@ -139,18 +136,18 @@ class NotificationsService {
       bigPictureStyleInformation = BigPictureStyleInformation(
         FilePathAndroidBitmap(imagePath),
         hideExpandedLargeIcon: true,
-        contentTitle: 'overridden <b>big</b> content title',
+        contentTitle: '<b>$title</b>',
         htmlFormatContentTitle: true,
-        summaryText: 'summary <i>text</i>',
+        summaryText: body,
         htmlFormatSummaryText: true,
       );
     }
 
     AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
-      'your channel id',
-      'your channel name',
-      channelDescription: 'your channel description',
+      _channelId,
+      _channelName,
+      channelDescription: _channelDescription,
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
@@ -170,44 +167,46 @@ class NotificationsService {
     );
   }
 
-  void _handleRemoteMessage(RemoteMessage remoteMessage) async {
+  void _handleBackgroundRemoteMessage(RemoteMessage remoteMessage) async {
     String payload = jsonEncode(remoteMessage.data);
 
-    if (remoteMessage.data['allow_notifications'] == '1') {
-      String? imageUrl = _getImageUrl(remoteMessage.notification!);
-
-      showSimpleNotification(
-        title: remoteMessage.notification!.title!,
-        body: remoteMessage.notification!.body!,
-        payload: payload,
-        imageUrl: imageUrl,
-      );
-    } else {
-      // handle foreground notification data
-      // update view or go to screen
-
-      if (Get.isRegistered<MessagesController>()) {
-        // MessagesController messagesController = Get.find<MessagesController>();
-        // messagesController.addMessage(
-        //   remoteMessage.notification!.title!,
-        // );
-      } else {
-        Get.to(
-          () => const MessagesScreen(),
-          binding: MessagesBinding(),
-        );
-      }
-    }
+    AppLogger.log(payload);
   }
 
-  static void onNotificationTap(NotificationResponse notificationResponse) {
+  void _handleForegroundRemoteMessage(RemoteMessage remoteMessage) async {
+    String payload = jsonEncode(remoteMessage.data);
+
+    // handle foreground notification data
+    // update ui or go to screen
+
+    // ? todo : chack if the user is opening the screen to just
+    // ? update the ui or data
+
+    // if (Get.isRegistered<NotificationsController>()) {
+    // Get.find<NotificationsController>().refreshApiCall();
+    // } else {
+    // ? here the user is not opening the screen
+    // ? show a simple notification.
+    String? imageUrl = _getImageUrl(remoteMessage.notification!);
+    showSimpleNotification(
+      title: remoteMessage.notification!.title!,
+      body: remoteMessage.notification!.body!,
+      payload: payload,
+      imageUrl: imageUrl,
+    );
+    // }
+  }
+
+  static void _onNotificationTap(NotificationResponse notificationResponse) {
+    // ? handles the click of the notification
+    // ? opened from _handleForegroundRemoteMessage()
     AppLogger.log('Foreground Notification Tapped.');
     if (notificationResponse.payload != null) {
       Map<String, dynamic> data = jsonDecode(notificationResponse.payload!);
       AppLogger.log(data.toString());
 
       /// just navigate to the screen and handle loading data their
-      Get.to(() => const MessagesScreen(), binding: MessagesBinding());
+      // Get.to(() => const NotificationsScreen());
     }
   }
 }
