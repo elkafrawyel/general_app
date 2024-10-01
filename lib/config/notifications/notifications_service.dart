@@ -11,8 +11,7 @@ import 'package:path_provider/path_provider.dart';
 class NotificationsService {
   static const String _channelId = 'com.general.app';
   static const String _channelName = 'GeneralApp';
-  static const String _channelDescription =
-      'Bassant Academy channel description';
+  static const String _channelDescription = '';
 
   static final _instance = FirebaseMessaging.instance;
   static final FlutterLocalNotificationsPlugin
