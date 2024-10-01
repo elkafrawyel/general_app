@@ -1,4 +1,4 @@
-import 'package:general_app/config/operation_reply.dart';
+import 'package:general_app/config/clients/api/api_result.dart';
 import 'package:general_app/controller/general_controller.dart';
 
 class MessagesController extends GeneralController {
@@ -11,7 +11,7 @@ class MessagesController extends GeneralController {
   }
 
   Future loadMessages() async {
-    operationReply = OperationReply.loading();
+    apiResult = const ApiLoading();
     await Future.delayed(const Duration(seconds: 3));
     messages.addAll([
       'A1',
@@ -23,8 +23,7 @@ class MessagesController extends GeneralController {
       'A7',
       'A8',
     ]);
-
-    operationReply = OperationReply.success();
+    apiResult = ApiSuccess(messages);
   }
 
   addMessage(String message) {

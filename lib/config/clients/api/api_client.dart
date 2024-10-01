@@ -9,7 +9,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../environment.dart';
 import 'network_helper.dart';
-import '../../operation_reply.dart';
 
 enum DioMethods { get, post, patch, put, delete }
 

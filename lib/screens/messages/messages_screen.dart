@@ -24,8 +24,8 @@ class _MessagesScreenState extends State<MessagesScreen>
       appBar: const AppAppbar(title: 'FCM Messages'),
       body: GetBuilder<MessagesController>(
         builder: (controller) {
-          return HandleApiState.operation(
-            operationReply: controller.operationReply,
+          return HandleApiState.apiResult(
+            apiResult: controller.apiResult,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(28.0),

@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 
-import '../config/operation_reply.dart';
+import 'package:general_app/config/clients/api/api_result.dart';
 
 abstract class GeneralController extends GetxController {
-  OperationReply _operationReply = OperationReply.init();
+  ApiResult _apiResult = const ApiStart();
 
-  OperationReply get operationReply => _operationReply;
+  ApiResult get apiResult => _apiResult;
 
-  set operationReply(OperationReply value) {
-    _operationReply = value;
+  set apiResult(ApiResult value) {
+    _apiResult = value;
     update();
   }
 

@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart' as ok_toast;
 
-import 'operation_reply.dart';
-
 abstract class InformationViewer {
   static showToast({
     required String msg,
@@ -34,19 +32,6 @@ abstract class InformationViewer {
       textColor: textColor,
       fontSize: fontSize,
     );
-  }
-
-  static showToastBasedOnReply(OperationReply reply) {
-    if (reply.message == null) {
-      return;
-    }
-    if (reply.isSuccess()) {
-      showSuccessToast(msg: reply.message!);
-    } else if (reply.status == OperationStatus.failed) {
-      showErrorToast(msg: reply.message!);
-    } else {
-      showToast(msg: reply.message!, backgroundColor: Colors.black);
-    }
   }
 
   static showSuccessToast({
