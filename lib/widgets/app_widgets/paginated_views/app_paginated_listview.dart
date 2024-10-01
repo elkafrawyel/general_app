@@ -50,49 +50,59 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
         );
       },
       builder: (controller) {
-        return widget.shimmerLoading == null &&
-                controller.operationReply.isLoading()
+        return widget.shimmerLoading == null && controller.apiResult.isLoading()
             ? const Center(
                 child: CircularProgressIndicator.adaptive(),
               )
-            : RefreshIndicator(
-                backgroundColor: context.kPrimaryColor,
-                color: context.kColorOnPrimary,
-                onRefresh: controller.refreshApiCall,
-                child: controller.operationReply.isEmpty()
-                    ? widget.emptyView ?? const SizedBox()
-                    : ListView.builder(
-                        controller: _scrollController,
-                        itemCount: controller.operationReply.isLoading() &&
-                                widget.shimmerLoading != null
-                            ? 10
-                            : controller.paginationList.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (controller.operationReply.isLoading()) {
-                            return widget.shimmerLoading;
-                          } else {
-                            if (index < controller.paginationList.length) {
-                              return widget
-                                  .child(controller.paginationList[index]);
-                            } else {
-                              return Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 28.0,
-                                    top: 18.0,
-                                  ),
-                                  child: controller.loadingMoreEnd
-                                      ? _loadingMoreEndView()
-                                      : controller.loadingMore
-                                          ? _loadingMoreView()
-                                          : const SizedBox(),
-                                ),
-                              );
-                            }
-                          }
-                        },
+            : controller.apiResult.isFailure()
+                ? Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(38.0),
+                      child: AppText(
+                        text: controller.apiResult.getError(),
+                        maxLines: 5,
+                        centerText: true,
                       ),
-              );
+                    ),
+                  )
+                : RefreshIndicator(
+                    backgroundColor: context.kPrimaryColor,
+                    color: context.kColorOnPrimary,
+                    onRefresh: controller.refreshApiCall,
+                    child: controller.apiResult.isEmpty()
+                        ? widget.emptyView ?? const SizedBox()
+                        : ListView.builder(
+                            controller: _scrollController,
+                            itemCount: controller.apiResult.isLoading() &&
+                                    widget.shimmerLoading != null
+                                ? 10
+                                : controller.paginationList.length + 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (controller.apiResult.isLoading()) {
+                                return widget.shimmerLoading;
+                              } else {
+                                if (index < controller.paginationList.length) {
+                                  return widget
+                                      .child(controller.paginationList[index]);
+                                } else {
+                                  return Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 28.0,
+                                        top: 18.0,
+                                      ),
+                                      child: controller.loadingMoreEnd
+                                          ? _loadingMoreEndView()
+                                          : controller.loadingMore
+                                              ? _loadingMoreView()
+                                              : const SizedBox(),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                          ),
+                  );
       },
     );
   }

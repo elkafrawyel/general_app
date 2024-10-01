@@ -52,14 +52,13 @@ class _AppPaginatedGridviewState<T> extends State<AppPaginatedGridView<T>> {
         );
       },
       builder: (controller) {
-        return widget.shimmerLoading == null &&
-                controller.operationReply.isLoading()
+        return widget.shimmerLoading == null && controller.apiResult.isLoading()
             ? const Center(
                 child: CircularProgressIndicator.adaptive(),
               )
             : RefreshIndicator(
                 onRefresh: controller.refreshApiCall,
-                child: controller.operationReply.isEmpty()
+                child: controller.apiResult.isEmpty()
                     ? widget.emptyView ?? const SizedBox()
                     : Column(
                         children: [
@@ -70,13 +69,12 @@ class _AppPaginatedGridviewState<T> extends State<AppPaginatedGridView<T>> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: widget.crossAxisCount,
                               ),
-                              itemCount:
-                                  controller.operationReply.isLoading() &&
-                                          widget.shimmerLoading != null
-                                      ? 20
-                                      : controller.paginationList.length,
+                              itemCount: controller.apiResult.isLoading() &&
+                                      widget.shimmerLoading != null
+                                  ? 20
+                                  : controller.paginationList.length,
                               itemBuilder: (BuildContext context, int index) {
-                                if (controller.operationReply.isLoading()) {
+                                if (controller.apiResult.isLoading()) {
                                   return widget.shimmerLoading;
                                 } else {
                                   return widget

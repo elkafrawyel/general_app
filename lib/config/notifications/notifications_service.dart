@@ -6,8 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
-import 'package:get/instance_manager.dart';
-import 'package:get/route_manager.dart';
 import 'package:path_provider/path_provider.dart';
 
 class NotificationsService {

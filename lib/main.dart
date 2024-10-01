@@ -109,7 +109,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: const AppOfflineHandler(child: HomeScreen()),
+            home: const HomeScreen(),
             builder: (context, child) {
               child = EasyLoading.init()(context, child);
               EasyLoading.instance

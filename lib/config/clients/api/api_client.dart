@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:general_app/config/clients/api/api_result.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/helpers/logging_helper.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../environment.dart';
-import '../../helpers/network_helper.dart';
+import 'network_helper.dart';
 import '../../operation_reply.dart';
 
 enum DioMethods { get, post, patch, put, delete }
@@ -66,27 +67,27 @@ class APIClient {
         '${tokenType ?? 'Bearer'} $token';
   }
 
-  Future<OperationReply<T>> get<T>({
+  Future<ApiResult<T>> get<T>({
     required String endPoint,
     required T Function(dynamic) fromJson,
   }) async {
-    if (await NetworkHelper.isConnected()) {
-      try {
-        Response response = await _client.get(endPoint);
-        if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(result: fromJson(response.data));
-        } else {
-          return NetworkHelper.handleCommonNetworkCases(response).as<T>();
-        }
-      } catch (error) {
-        return OperationReply.failed(message: error.toString());
+    try {
+      Response response = await _client.get(endPoint);
+      if (NetworkHelper.isSuccess(response)) {
+        return ApiSuccess(fromJson(response.data));
+      } else {
+        return NetworkHelper.handleCommonNetworkCases(response);
       }
-    } else {
-      return OperationReply.connectionDown();
+    } on SocketException {
+      return const ApiFailure('Network Error');
+    } on TimeoutException {
+      return const ApiFailure('Request Timedout');
+    } catch (error) {
+      return const ApiFailure('Unexpected Error');
     }
   }
 
-  Future<OperationReply<T>> post<T>({
+  Future<ApiResult<T>> post<T>({
     required String endPoint,
     required T Function(dynamic) fromJson,
     required Map<String, dynamic> requestBody,
@@ -94,144 +95,136 @@ class APIClient {
     Function(double percentage)? onUploadProgress,
     Function(double percentage)? onDownloadProgress,
   }) async {
-    if (await NetworkHelper.isConnected()) {
-      try {
-        bool haveFiles = false;
-        FormData formData = FormData.fromMap({});
-        if (files.isNotEmpty) {
-          haveFiles = true;
-          formData = FormData.fromMap(requestBody);
-          formData.files.addAll(files
-              .map(
-                (e) => MapEntry(
-                  e.key,
-                  MultipartFile.fromFileSync(e.value.path,
-                      filename: e.value.path.split("/").last),
-                ),
-              )
-              .toList());
-        }
-        Response response = await _client.post(
-          endPoint,
-          data: haveFiles ? formData : requestBody,
-          onReceiveProgress: (received, total) {
-            int percentage = ((received / total) * 100).floor();
-
-            if (onDownloadProgress != null) {
-              onDownloadProgress((received / total));
-            }
-            AppLogger.log('Downloading ....$percentage');
-          },
-          onSendProgress: (sent, total) {
-            int percentage = ((sent / total) * 100).floor();
-            if (onUploadProgress != null) {
-              onUploadProgress((sent / total));
-            }
-            AppLogger.log('Uploading ....$percentage');
-          },
-        );
-        if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(result: fromJson(response.data));
-        } else {
-          return NetworkHelper.handleCommonNetworkCases(response).as<T>();
-        }
-      } catch (error) {
-        return OperationReply.failed(message: error.toString());
+    try {
+      bool haveFiles = false;
+      FormData formData = FormData.fromMap({});
+      if (files.isNotEmpty) {
+        haveFiles = true;
+        formData = FormData.fromMap(requestBody);
+        formData.files.addAll(files
+            .map(
+              (e) => MapEntry(
+                e.key,
+                MultipartFile.fromFileSync(e.value.path,
+                    filename: e.value.path.split("/").last),
+              ),
+            )
+            .toList());
       }
-    } else {
-      return OperationReply.connectionDown();
+      Response response = await _client.post(
+        endPoint,
+        data: haveFiles ? formData : requestBody,
+        onReceiveProgress: (received, total) {
+          int percentage = ((received / total) * 100).floor();
+
+          if (onDownloadProgress != null) {
+            onDownloadProgress((received / total));
+          }
+          AppLogger.log('Downloading ....$percentage');
+        },
+        onSendProgress: (sent, total) {
+          int percentage = ((sent / total) * 100).floor();
+          if (onUploadProgress != null) {
+            onUploadProgress((sent / total));
+          }
+          AppLogger.log('Uploading ....$percentage');
+        },
+      );
+      if (NetworkHelper.isSuccess(response)) {
+        return ApiSuccess(fromJson(response.data));
+      } else {
+        return NetworkHelper.handleCommonNetworkCases(response);
+      }
+    } on DioException catch (error) {
+      return NetworkHelper.handleDioError(error);
+    } catch (error) {
+      return const ApiFailure('Unexpected Error');
     }
   }
 
-  Future<OperationReply<T>> put<T>({
+  Future<ApiResult<T>> put<T>({
     required String endPoint,
     required T Function(dynamic) fromJson,
     required Map<String, dynamic> requestBody,
     List<MapEntry<String, File>> files = const [],
   }) async {
-    if (await NetworkHelper.isConnected()) {
-      try {
-        bool haveFiles = false;
-        FormData formData = FormData.fromMap({});
-        if (files.isNotEmpty) {
-          haveFiles = true;
-          formData = FormData.fromMap(requestBody);
-          formData.files.addAll(files
-              .map(
-                (e) => MapEntry(
-                  e.key,
-                  MultipartFile.fromFileSync(e.value.path,
-                      filename: e.value.path.split("/").last),
-                ),
-              )
-              .toList());
-        }
-        Response response = await _client.put(
-          endPoint,
-          data: haveFiles ? formData : requestBody,
-          onReceiveProgress: (received, total) {
-            int percentage = ((received / total) * 100).floor();
-            AppLogger.log('Downloading ....$percentage');
-          },
-          onSendProgress: (sent, total) {
-            int percentage = ((sent / total) * 100).floor();
-            AppLogger.log('Uploading ....$percentage');
-          },
-        );
-        if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(result: fromJson(response.data));
-        } else {
-          return NetworkHelper.handleCommonNetworkCases(response).as<T>();
-        }
-      } catch (error) {
-        return OperationReply.failed(message: error.toString());
+    try {
+      bool haveFiles = false;
+      FormData formData = FormData.fromMap({});
+      if (files.isNotEmpty) {
+        haveFiles = true;
+        formData = FormData.fromMap(requestBody);
+        formData.files.addAll(files
+            .map(
+              (e) => MapEntry(
+                e.key,
+                MultipartFile.fromFileSync(e.value.path,
+                    filename: e.value.path.split("/").last),
+              ),
+            )
+            .toList());
       }
-    } else {
-      return OperationReply.connectionDown();
+      Response response = await _client.put(
+        endPoint,
+        data: haveFiles ? formData : requestBody,
+        onReceiveProgress: (received, total) {
+          int percentage = ((received / total) * 100).floor();
+          AppLogger.log('Downloading ....$percentage');
+        },
+        onSendProgress: (sent, total) {
+          int percentage = ((sent / total) * 100).floor();
+          AppLogger.log('Uploading ....$percentage');
+        },
+      );
+      if (NetworkHelper.isSuccess(response)) {
+        return ApiSuccess(fromJson(response.data));
+      } else {
+        return NetworkHelper.handleCommonNetworkCases(response);
+      }
+    } on DioException catch (error) {
+      return NetworkHelper.handleDioError(error);
+    } catch (error) {
+      return const ApiFailure('Unexpected Error');
     }
   }
 
-  Future<OperationReply<T>> delete<T>({
+  Future<ApiResult<T>> delete<T>({
     required String endPoint,
     required T Function(dynamic) fromJson,
     required Map<String, dynamic> requestBody,
     List<MapEntry<String, File>> files = const [],
   }) async {
-    if (await NetworkHelper.isConnected()) {
-      try {
-        Response response = await _client.delete(endPoint, data: requestBody);
-        if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(result: fromJson(response.data));
-        } else {
-          return NetworkHelper.handleCommonNetworkCases(response).as<T>();
-        }
-      } catch (error) {
-        return OperationReply.failed(message: error.toString());
+    try {
+      Response response = await _client.delete(endPoint, data: requestBody);
+      if (NetworkHelper.isSuccess(response)) {
+        return ApiSuccess(fromJson(response.data));
+      } else {
+        return NetworkHelper.handleCommonNetworkCases(response);
       }
-    } else {
-      return OperationReply.connectionDown();
+    } on DioException catch (error) {
+      return NetworkHelper.handleDioError(error);
+    } catch (error) {
+      return const ApiFailure('Unexpected Error');
     }
   }
 
-  Future<OperationReply<T>> patch<T>({
+  Future<ApiResult<T>> patch<T>({
     required String endPoint,
     required T Function(dynamic) fromJson,
     required Map<String, dynamic> requestBody,
     List<MapEntry<String, File>> files = const [],
   }) async {
-    if (await NetworkHelper.isConnected()) {
-      try {
-        Response response = await _client.patch(endPoint, data: requestBody);
-        if (NetworkHelper.isSuccess(response)) {
-          return OperationReply.success(result: fromJson(response.data));
-        } else {
-          return NetworkHelper.handleCommonNetworkCases(response).as<T>();
-        }
-      } catch (error) {
-        return OperationReply.failed(message: error.toString());
+    try {
+      Response response = await _client.patch(endPoint, data: requestBody);
+      if (NetworkHelper.isSuccess(response)) {
+        return ApiSuccess(fromJson(response.data));
+      } else {
+        return NetworkHelper.handleCommonNetworkCases(response);
       }
-    } else {
-      return OperationReply.connectionDown();
+    } on DioException catch (error) {
+      return NetworkHelper.handleDioError(error);
+    } catch (error) {
+      return const ApiFailure('Unexpected Error');
     }
   }
 }

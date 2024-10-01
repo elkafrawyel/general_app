@@ -1,4 +1,5 @@
 import 'package:general_app/config/clients/api/api_client.dart';
+import 'package:general_app/config/clients/api/api_result.dart';
 import 'package:get/get.dart';
 
 import '../../../../config/operation_reply.dart';
@@ -20,12 +21,12 @@ class PaginationController<T> extends GetxController {
   PaginationResponse<T>? paginationResponse;
   List<T> paginationList = [];
 
-  OperationReply _operationReply = OperationReply.init();
+  ApiResult _apiResult = const ApiStart();
 
-  OperationReply get operationReply => _operationReply;
+  ApiResult get apiResult => _apiResult;
 
-  set operationReply(OperationReply value) {
-    _operationReply = value;
+  set apiResult(ApiResult value) {
+    _apiResult = value;
     update();
   }
 
@@ -53,10 +54,10 @@ class PaginationController<T> extends GetxController {
 
   Future callApi({bool loading = true}) async {
     if (loading) {
-      operationReply = OperationReply.loading();
+      apiResult = const ApiLoading();
     }
     if (configData.isPostRequest) {
-      operationReply = await APIClient.instance.post(
+      apiResult = await APIClient.instance.post(
         endPoint: '${configData.apiEndPoint}?$_paginate=$paginate',
         fromJson: (json) => PaginationResponse<T>.fromJson(
           json,
@@ -77,7 +78,7 @@ class PaginationController<T> extends GetxController {
         });
       }
 
-      operationReply = await APIClient.instance.get(
+      apiResult = await APIClient.instance.get(
         endPoint: path,
         fromJson: (json) => PaginationResponse<T>.fromJson(
           json,
@@ -86,17 +87,15 @@ class PaginationController<T> extends GetxController {
       );
     }
 
-    if (operationReply.isSuccess()) {
-      paginationResponse = operationReply.result;
+    if (apiResult.isSuccess()) {
+      paginationResponse = apiResult.getData();
       paginationList = paginationResponse?.data ?? [];
       isLastPage = paginationList.length < perPage;
 
       if (paginationList.isEmpty) {
-        operationReply = OperationReply.empty(
-          message: configData.emptyListMessage,
-        );
+        apiResult = ApiEmpty(configData.emptyListMessage);
       } else {
-        operationReply = OperationReply.success();
+        apiResult = ApiSuccess(paginationList);
       }
     }
   }
@@ -112,7 +111,7 @@ class PaginationController<T> extends GetxController {
     }
     loadingMore = true;
     if (configData.isPostRequest) {
-      operationReply = await APIClient.instance.post(
+      apiResult = await APIClient.instance.post(
         endPoint: '${configData.apiEndPoint}?$_paginate=$paginate',
         fromJson: (json) => PaginationResponse<T>.fromJson(
           json,
@@ -133,7 +132,7 @@ class PaginationController<T> extends GetxController {
         });
       }
 
-      operationReply = await APIClient.instance.get(
+      apiResult = await APIClient.instance.get(
         endPoint: path,
         fromJson: (json) => PaginationResponse<T>.fromJson(
           json,
@@ -142,17 +141,17 @@ class PaginationController<T> extends GetxController {
       );
     }
 
-    if (operationReply.isSuccess()) {
-      paginationResponse = operationReply.result;
+    if (apiResult is ApiSuccess) {
+      paginationResponse = apiResult.getData();
 
       isLastPage = (paginationResponse?.data ?? []).length < perPage;
 
       paginationList.addAll(paginationResponse?.data ?? []);
 
       if (paginationList.isEmpty) {
-        operationReply = OperationReply.empty();
+        apiResult = ApiEmpty(configData.emptyListMessage);
       } else {
-        operationReply = OperationReply.success();
+        apiResult = ApiSuccess(paginationList);
       }
     }
     loadingMore = false;
