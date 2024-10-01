@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 
 import 'app_text.dart';
