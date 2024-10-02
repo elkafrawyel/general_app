@@ -12,7 +12,6 @@ import 'package:general_app/config/language/language_model.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/screens/home_screen.dart';
 import 'package:general_app/widgets/app_widgets/app_focus_remover.dart';
-import 'package:general_app/widgets/app_widgets/app_offline_handler.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 

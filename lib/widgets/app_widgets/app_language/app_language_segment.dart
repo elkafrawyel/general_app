@@ -3,8 +3,6 @@ import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/language/language_model.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 
-import '../app_text.dart';
-
 class AppLanguageSegment extends StatefulWidget {
   const AppLanguageSegment({super.key});
 
