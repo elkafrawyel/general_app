@@ -3,7 +3,7 @@ import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-import '../../config/language/language_model.dart';
+import '../../../config/language/language_model.dart';
 
 class AppLanguageSwitch extends StatefulWidget {
   const AppLanguageSwitch({super.key});
@@ -17,17 +17,25 @@ class _AppLanguageSwitchState extends State<AppLanguageSwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Directionality(
-        textDirection: TextDirection.ltr,
+    const radius = 8.0;
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: context.kPrimaryColor,
+          ),
+          borderRadius: BorderRadius.circular(radius),
+        ),
         child: ToggleSwitch(
-          minWidth: 70.0,
           initialLabelIndex: index,
-          cornerRadius: 8.0,
+          cornerRadius: radius,
+          animate: true,
+          animationDuration: 300,
           activeFgColor: Colors.white,
-          inactiveFgColor: Colors.white,
-          inactiveBgColor: context.kHintTextColor,
+          inactiveFgColor: context.kTextColor,
+          inactiveBgColor: context.kBackgroundColor,
           totalSwitches: LanguageData.languageList().length,
           labels: LanguageData.languageList().map((e) => e.name).toList(),
           activeBgColors: [

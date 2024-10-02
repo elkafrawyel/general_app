@@ -23,8 +23,9 @@ import 'package:general_app/widgets/app_widgets/app_chips_single_choice.dart';
 import 'package:general_app/widgets/app_widgets/app_dialogs/logout_dialog.dart';
 import 'package:general_app/widgets/app_widgets/app_dropdown_menu.dart';
 import 'package:general_app/widgets/app_widgets/app_image_picker_dialog.dart';
-import 'package:general_app/widgets/app_widgets/app_language_dialog.dart';
-import 'package:general_app/widgets/app_widgets/app_language_switch.dart';
+import 'package:general_app/widgets/app_widgets/app_language/app_language_dialog.dart';
+import 'package:general_app/widgets/app_widgets/app_language/app_language_segment.dart';
+import 'package:general_app/widgets/app_widgets/app_language/app_language_switch.dart';
 import 'package:general_app/widgets/app_widgets/app_list_tile.dart';
 import 'package:general_app/widgets/app_widgets/app_modal_bottom_sheet.dart';
 import 'package:general_app/widgets/app_widgets/app_network_image.dart';
@@ -264,6 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   showAppLanguageDialog(context: context);
                 },
               ),
+              AppLanguageSegment(),
               AppButton(
                 text: 'Choose Picture',
                 onPressed: () {
