@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/theme/color_extension.dart';
+import 'package:general_app/widgets/app_data_state/handel_api_state.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
 import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/data/config_data.dart';
 import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/paginated_controller.dart';
@@ -52,57 +53,60 @@ class _AppPaginatedGridviewState<T> extends State<AppPaginatedGridView<T>> {
         );
       },
       builder: (controller) {
-        return widget.shimmerLoading == null && controller.apiResult.isLoading()
-            ? const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
-            : RefreshIndicator(
-                onRefresh: controller.refreshApiCall,
-                child: controller.apiResult.isEmpty()
-                    ? widget.emptyView ?? const SizedBox()
-                    : Column(
-                        children: [
-                          Expanded(
-                            child: GridView.builder(
-                              controller: _scrollController,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: widget.crossAxisCount,
-                              ),
-                              itemCount: controller.apiResult.isLoading() &&
-                                      widget.shimmerLoading != null
-                                  ? 20
-                                  : controller.paginationList.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                if (controller.apiResult.isLoading()) {
-                                  return widget.shimmerLoading;
-                                } else {
-                                  return widget
-                                      .child(controller.paginationList[index]);
-                                }
-                              },
-                            ),
+        return HandleApiState.apiResult(
+          apiResult: controller.apiResult,
+          shimmerLoader: widget.shimmerLoading == null
+              ? null
+              : GridView.builder(
+                  controller: _scrollController,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: widget.crossAxisCount,
+                  ),
+                  itemCount: 20,
+                  itemBuilder: (BuildContext context, int index) =>
+                      widget.shimmerLoading,
+                ),
+          child: RefreshIndicator(
+            onRefresh: controller.refreshApiCall,
+            child: controller.apiResult.isEmpty()
+                ? widget.emptyView ?? const SizedBox()
+                : Column(
+                    children: [
+                      Expanded(
+                        child: GridView.builder(
+                          controller: _scrollController,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: widget.crossAxisCount,
                           ),
-                          Offstage(
-                            offstage: !controller.loadingMore &&
-                                !controller.loadingMoreEnd,
-                            child: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 28.0,
-                                  top: 18.0,
-                                ),
-                                child: controller.loadingMoreEnd
-                                    ? _loadingMoreEndView()
-                                    : controller.loadingMore
-                                        ? _loadingMoreView()
-                                        : const SizedBox(),
-                              ),
-                            ),
-                          )
-                        ],
+                          itemCount: controller.paginationList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return widget
+                                .child(controller.paginationList[index]);
+                          },
+                        ),
                       ),
-              );
+                      Offstage(
+                        offstage: !controller.loadingMore &&
+                            !controller.loadingMoreEnd,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 28.0,
+                              top: 18.0,
+                            ),
+                            child: controller.loadingMoreEnd
+                                ? _loadingMoreEndView()
+                                : controller.loadingMore
+                                    ? _loadingMoreView()
+                                    : const SizedBox(),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+          ),
+        );
       },
     );
   }

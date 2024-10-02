@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/theme/color_extension.dart';
+import 'package:general_app/widgets/app_data_state/handel_api_state.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
 import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/data/config_data.dart';
 import 'package:general_app/widgets/app_widgets/paginated_views/paginated_controller/paginated_controller.dart';
 import 'package:get/get.dart';
 
-class AppPaginatedListview<T> extends StatefulHookWidget {
+class AppPaginatedListview<T> extends StatefulWidget {
   final Widget Function(T item) child;
   final Widget? shimmerLoading;
   final Widget? emptyView;
@@ -50,59 +50,47 @@ class _AppPaginatedListviewState<T> extends State<AppPaginatedListview<T>> {
         );
       },
       builder: (controller) {
-        return widget.shimmerLoading == null && controller.apiResult.isLoading()
-            ? const Center(
-                child: CircularProgressIndicator.adaptive(),
-              )
-            : controller.apiResult.isFailure()
-                ? Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(38.0),
-                      child: AppText(
-                        text: controller.apiResult.getError(),
-                        maxLines: 5,
-                        centerText: true,
-                      ),
-                    ),
-                  )
-                : RefreshIndicator(
-                    backgroundColor: context.kPrimaryColor,
-                    color: context.kColorOnPrimary,
-                    onRefresh: controller.refreshApiCall,
-                    child: controller.apiResult.isEmpty()
-                        ? widget.emptyView ?? const SizedBox()
-                        : ListView.builder(
-                            controller: _scrollController,
-                            itemCount: controller.apiResult.isLoading() &&
-                                    widget.shimmerLoading != null
-                                ? 10
-                                : controller.paginationList.length + 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              if (controller.apiResult.isLoading()) {
-                                return widget.shimmerLoading;
-                              } else {
-                                if (index < controller.paginationList.length) {
-                                  return widget
-                                      .child(controller.paginationList[index]);
-                                } else {
-                                  return Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        bottom: 28.0,
-                                        top: 18.0,
-                                      ),
-                                      child: controller.loadingMoreEnd
-                                          ? _loadingMoreEndView()
-                                          : controller.loadingMore
-                                              ? _loadingMoreView()
-                                              : const SizedBox(),
-                                    ),
-                                  );
-                                }
-                              }
-                            },
+        return HandleApiState.apiResult(
+          apiResult: controller.apiResult,
+          shimmerLoader: widget.shimmerLoading == null
+              ? null
+              : ListView.builder(
+                  controller: _scrollController,
+                  itemCount: 10,
+                  itemBuilder: (BuildContext context, int index) =>
+                      widget.shimmerLoading,
+                ),
+          child: RefreshIndicator(
+            backgroundColor: context.kPrimaryColor,
+            color: context.kColorOnPrimary,
+            onRefresh: controller.refreshApiCall,
+            child: controller.apiResult.isEmpty()
+                ? widget.emptyView ?? const SizedBox()
+                : ListView.builder(
+                    controller: _scrollController,
+                    itemCount: controller.paginationList.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index < controller.paginationList.length) {
+                        return widget.child(controller.paginationList[index]);
+                      } else {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 28.0,
+                              top: 18.0,
+                            ),
+                            child: controller.loadingMoreEnd
+                                ? _loadingMoreEndView()
+                                : controller.loadingMore
+                                    ? _loadingMoreView()
+                                    : const SizedBox(),
                           ),
-                  );
+                        );
+                      }
+                    },
+                  ),
+          ),
+        );
       },
     );
   }

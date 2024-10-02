@@ -63,6 +63,8 @@ class NetworkHelper {
       return ApiFailure(isAr ? 'لا يوجد إتصال بالانترنت' : 'Network Error');
     } else if (error.type == DioExceptionType.connectionTimeout) {
       return const ApiFailure('Request Timedout');
+    } else if (error.type == DioExceptionType.receiveTimeout) {
+      return const ApiFailure('Receive Timedout');
     } else if (error.type == DioExceptionType.badCertificate) {
       return const ApiFailure('Bad Certificate');
     } else if (error.type == DioExceptionType.badResponse) {

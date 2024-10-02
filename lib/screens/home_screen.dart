@@ -10,6 +10,7 @@ import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/config/theme/theme_controller.dart';
+import 'package:general_app/screens/form/form_screen.dart';
 import 'package:general_app/screens/hooks/hooks_screen.dart';
 import 'package:general_app/screens/messages/controller/messages_binding.dart';
 import 'package:general_app/screens/messages/messages_screen.dart';
@@ -102,6 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   InformationViewer.showSuccessToast(msg: 'List Tile Clicked');
                 },
                 body: 'New Tile body for the list tile title ',
+              ),
+              AppButton(
+                text: 'Form Screen',
+                onPressed: () {
+                  Get.to(() => const FormScreen());
+                },
               ),
               AppButton(
                 text: 'Hooks Screen',
@@ -265,7 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   showAppLanguageDialog(context: context);
                 },
               ),
-              AppLanguageSegment(),
+              const AppLanguageSegment(),
               AppButton(
                 text: 'Choose Picture',
                 onPressed: () {

@@ -67,7 +67,7 @@ class HandleApiState extends StatelessWidget {
             AppEmptyView(
               emptyText: apiResult!.getError(),
             );
-      } else if (generalController!.apiResult is ApiSuccess) {
+      } else if (apiResult is ApiSuccess) {
         return child;
       } else {
         return const SizedBox();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/constants.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:get/get.dart';
@@ -128,7 +129,10 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                     } else if (value == null || value.isEmpty) {
                       return !widget.required
                           ? null
-                          : (widget.validateEmptyText ?? 'field_required'.tr);
+                          : (widget.validateEmptyText ??
+                              (StorageClient().isAr()
+                                  ? 'قم بإدخال البيانات المطلوبة *'
+                                  : '* Please enter the required information'));
                     } else {
                       return null;
                     }
@@ -138,7 +142,10 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                       widget.onChanged!(value);
                     }
 
-                    if (value == null || !widget.checkRules) {
+                    if (value == null || value.isEmpty || !widget.checkRules) {
+                      setState(() {
+                        hasError = false;
+                      });
                       return;
                     }
 
@@ -146,7 +153,6 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                       case AppFieldType.text:
                         break;
                       case AppFieldType.name:
-                        _validateRules(value, nameRules);
                         break;
                       case AppFieldType.email:
                         _validateRules(value, emailRules);
@@ -154,7 +160,6 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                       case AppFieldType.password:
                         _validateRules(value, passwordRules);
                         break;
-
                       case AppFieldType.confirmPassword:
                         break;
                       case AppFieldType.phone:
@@ -166,7 +171,7 @@ class AppTextFormFieldState extends State<AppTextFormField> {
                   onFieldSubmitted: widget.onFieldSubmitted,
                   autofillHints: widget.autoFillHints,
                   onEditingComplete: widget.onEditingComplete,
-                  autovalidateMode: AutovalidateMode.disabled,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   textAlignVertical: TextAlignVertical.center,
                   textAlign: TextAlign.start,
                   maxLines: _isPasswordField ? 1 : widget.maxLines,
@@ -366,36 +371,30 @@ class AppTextFormFieldState extends State<AppTextFormField> {
     });
   }
 
-  final List<AuthFormRule> idRules = [
-    AuthFormRule(
-      ruleText: 'min_14_char'.tr,
-      condition: (value) {
-        return value.length >= 14;
-      },
-    ),
-  ];
-
-  final List<AuthFormRule> nameRules = [
-    AuthFormRule(
-      ruleText: 'invalid_username'.tr,
-      condition: (value) {
-        return GetUtils.isUsername(value);
-      },
-    ),
-  ];
-
   final List<AuthFormRule> emailRules = [
     AuthFormRule(
-      ruleText: 'invalid_email'.tr,
+      ruleText: StorageClient().isAr()
+          ? '.البريد الالكتروني غير صحيح'
+          : 'Email address is not valid.',
       condition: (value) {
         return GetUtils.isEmail(value);
       },
     )
   ];
-
+  final List<AuthFormRule> phoneNumberRules = [
+    AuthFormRule(
+      ruleText: StorageClient().isAr()
+          ? '.رقم الهاتف غير صحيح'
+          : 'Phone number is not valid.',
+      condition: (value) {
+        return GetUtils.isPhoneNumber(value);
+      },
+    ),
+  ];
   final List<AuthFormRule> passwordRules = [
     AuthFormRule(
-      ruleText: 'min_6_char'.tr,
+      ruleText:
+          StorageClient().isAr() ? '.أقل عدد ٦ حروف' : 'At least 6 letters.',
       condition: (value) {
         return value.length >= 6;
       },
@@ -426,30 +425,21 @@ class AppTextFormFieldState extends State<AppTextFormField> {
     // ),
   ];
 
-  final List<AuthFormRule> phoneNumberRules = [
-    AuthFormRule(
-      ruleText: 'invalid_phone'.tr,
-      condition: (value) {
-        return GetUtils.isPhoneNumber(value);
-      },
-    ),
-  ];
+  //   final List<AuthFormRule> idRules = [
+  //   AuthFormRule(
+  //     ruleText: 'min_14_char'.tr,
+  //     condition: (value) {
+  //       return value.length >= 14;
+  //     },
+  //   ),
+  // ];
 
-  final List<AuthFormRule> swiftCodeRules = [
-    AuthFormRule(
-      ruleText: 'valid_swift_code'.tr,
-      condition: (value) {
-        return value.length >= 8 && value.length <= 11;
-      },
-    ),
-  ];
-
-  final List<AuthFormRule> bankNumberRules = [
-    AuthFormRule(
-      ruleText: 'bank_number'.tr,
-      condition: (value) {
-        return value.length == 14;
-      },
-    ),
-  ];
+  // final List<AuthFormRule> nameRules = [
+  //   AuthFormRule(
+  //     ruleText: 'invalid_username'.tr,
+  //     condition: (value) {
+  //       return GetUtils.isUsername(value);
+  //     },
+  //   ),
+  // ];
 }

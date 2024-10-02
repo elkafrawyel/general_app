@@ -77,10 +77,8 @@ class APIClient {
       } else {
         return NetworkHelper.handleCommonNetworkCases(response);
       }
-    } on SocketException {
-      return const ApiFailure('Network Error');
-    } on TimeoutException {
-      return const ApiFailure('Request Timedout');
+    } on DioException catch (error) {
+      return NetworkHelper.handleDioError(error);
     } catch (error) {
       return const ApiFailure('Unexpected Error');
     }
