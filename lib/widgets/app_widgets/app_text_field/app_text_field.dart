@@ -319,9 +319,15 @@ class AppTextFormFieldState extends State<AppTextFormField> {
     });
   }
 
-  void updateHelperText(String text) {
+  void setHelperText(String text) {
     setState(() {
       _helperText = text;
+    });
+  }
+
+  void clearHelperText() {
+    setState(() {
+      _helperText = null;
     });
   }
 

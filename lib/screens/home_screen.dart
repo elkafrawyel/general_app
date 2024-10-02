@@ -303,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   textFormState.currentState?.shake();
                   textFormState.currentState
-                      ?.updateHelperText('Email in no longer valid');
+                      ?.setHelperText('Email in no longer valid');
                 },
               ),
               Row(
