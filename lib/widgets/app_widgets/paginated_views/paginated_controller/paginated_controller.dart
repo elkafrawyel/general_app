@@ -56,7 +56,7 @@ class PaginationController<T> extends GetxController {
       apiResult = const ApiLoading();
     }
     if (configData.isPostRequest) {
-      apiResult = await APIClient.instance.post(
+      apiResult = await APIClient.instance.post<PaginationResponse>(
         endPoint: '${configData.apiEndPoint}?$_paginate=$paginate',
         fromJson: (json) => PaginationResponse<T>.fromJson(
           json,

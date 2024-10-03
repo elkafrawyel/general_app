@@ -49,4 +49,30 @@ class DateHelper {
       ).format(date);
     }
   }
+
+  bool isToday(String dateString) {
+    String todayDate = getDateFromDate(
+      DateTime.now(),
+      dateFormat: DateFormat('EE, dd MMMM'),
+    );
+    String newDate = getDateFromDateString(
+      dateString,
+      dateFormat: DateFormat('EE, dd MMMM'),
+    );
+
+    return todayDate == newDate;
+  }
+
+  bool isYesterday(String dateString) {
+    String yesterdayDate = getDateFromDate(
+      DateTime.now().subtract(const Duration(days: 1)),
+      dateFormat: DateFormat('EE, dd MMMM'),
+    );
+    String newDate = getDateFromDateString(
+      dateString,
+      dateFormat: DateFormat('EE, dd MMMM'),
+    );
+
+    return yesterdayDate == newDate;
+  }
 }

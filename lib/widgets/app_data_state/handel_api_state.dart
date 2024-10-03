@@ -60,7 +60,6 @@ class HandleApiState extends StatelessWidget {
       } else if (apiResult is ApiFailure) {
         return AppErrorView(
           error: apiResult!.getError(),
-          retry: generalController!.refreshApiCall,
         );
       } else if (apiResult is ApiEmpty) {
         return emptyView ??

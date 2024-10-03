@@ -10,6 +10,7 @@ import 'package:general_app/config/information_viewer.dart';
 import 'package:general_app/config/res.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/config/theme/theme_controller.dart';
+import 'package:general_app/screens/chat_screen/chat_screen.dart';
 import 'package:general_app/screens/form/form_screen.dart';
 import 'package:general_app/screens/hooks/hooks_screen.dart';
 import 'package:general_app/screens/messages/controller/messages_binding.dart';
@@ -104,11 +105,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 body: 'New Tile body for the list tile title ',
               ),
-              AppButton(
-                text: 'Form Screen',
-                onPressed: () {
-                  Get.to(() => const FormScreen());
-                },
+              Row(
+                children: [
+                  AppButton(
+                    text: 'Chat Screen',
+                    onPressed: () {
+                      Get.to(() => const ChatScreen());
+                    },
+                  ),
+                  AppButton(
+                    text: 'Form Screen',
+                    onPressed: () {
+                      Get.to(() => const FormScreen());
+                    },
+                  ),
+                ],
               ),
               AppButton(
                 text: 'Hooks Screen',
