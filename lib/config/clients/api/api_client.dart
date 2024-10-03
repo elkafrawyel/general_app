@@ -18,10 +18,8 @@ class APIClient {
   static const testToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ6YWtpaWkiLCJqdGkiOiI2NjJiMzYxNi1iNTUyLTQ3NTgtYmJhNS0yODFjYWVjZmY3MmEiLCJlbWFpbCI6Inpha2lpaUBnbWFpbC5jb20iLCJ1c2VyX2lkIjoiZWY5NTQyMTEtYjNiMS00MjM0LTkyMjMtMGM3YjhjNTBjZjU5IiwidGltZSI6IjHigI_igI8vOeKAj-KAjy8yMDI0IDg6MjQ6MTgg2YUiLCJleHAiOjE3Mjc4MDM0NTgsImlzcyI6IlNlY3VyZUFwaSIsImF1ZCI6IlNlY3VyZUFwaVVzZXIifQ.fUj6eNT7bDwaidaQrjXfrrZ5br9PhK6sQ0ODgo4lBvQ';
 
-  /// private constructor
   APIClient._();
 
-  /// the one and only instance of this singleton
   static final instance = APIClient._();
 
   final Dio _client = Dio(

@@ -140,7 +140,7 @@ class PaginationController<T> extends GetxController {
       );
     }
 
-    if (apiResult is ApiSuccess) {
+    if (apiResult.isSuccess()) {
       paginationResponse = apiResult.getData();
 
       isLastPage = (paginationResponse?.data ?? []).length < perPage;
