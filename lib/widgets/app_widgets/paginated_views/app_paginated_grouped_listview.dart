@@ -83,7 +83,7 @@ class _AppPaginatedGroupedListviewState<T>
             onRefresh: controller.refreshApiCall,
             child: controller.apiResult.isEmpty()
                 ? widget.emptyView ?? const SizedBox()
-                : GroupedListView<T, DateTime?>(
+                : GroupedListView<T, DateTime>(
                     controller: _scrollController,
                     physics: const BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics(),
@@ -96,13 +96,15 @@ class _AppPaginatedGroupedListviewState<T>
                     elements: controller.paginationList.reversed.toList(),
                     groupBy: (T item) {
                       DateTime? date = DateTime.tryParse(item.toString());
-                      return date == null
-                          ? null
-                          : DateTime(
-                              date.year,
-                              date.month,
-                              date.day,
-                            );
+                      if (date == null) {
+                        throw Exception(
+                            'You must override the toString method on your model to return a string date');
+                      }
+                      return DateTime(
+                        date.year,
+                        date.month,
+                        date.day,
+                      );
                     },
                     groupHeaderBuilder: (T item) {
                       if (item.toString().isEmpty) {
