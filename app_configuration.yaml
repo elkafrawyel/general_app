@@ -1,7 +1,32 @@
 # firebase configuration
-# rename app  https://pub.dev/packages/rename
-# launcher  https://pub.dev/packages/flutter_launcher_icons
+# run the following commands to configure the firebase configuration
+  dart pub global activate flutterfire_cli
+  # change package name first
+  # this one depends on the firebase project 
+  # you want to add this app to it.
+  flutterfire configure --project=freelancing-project-7ed76
 #
+#
+#
+#
+# rename app  https://pub.dev/packages/rename 
+# run the following commands to rename the application
+ flutter pub global activate rename
+ rename setAppName --targets ios,android --value "Resturant"
+ rename setBundleId --targets android --value "com.resturant.app"
+ rename setBundleId --targets ios --value "com.resturant.app"
+#
+#
+#
+#
+#
+# launcher  https://pub.dev/packages/flutter_launcher_icons
+# 1- replace android icon on 
+  "assets/images/launcher/android_icon.png"
+# 2- replace ios icon on 
+  "assets/images/launcher/ios_icon.png"
+# 3- run the following command
+  dart pub run flutter_launcher_icons
 #
 #
 #
