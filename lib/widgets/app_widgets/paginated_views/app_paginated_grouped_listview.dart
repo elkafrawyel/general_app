@@ -1,7 +1,5 @@
-import 'package:chat_bubbles/chat_bubbles.dart';
 import 'package:flutter/material.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
-import 'package:general_app/config/extension/space_extension.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:general_app/widgets/app_data_state/handel_api_state.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
@@ -12,7 +10,6 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
 import '../../../config/helpers/date_helper.dart';
-import '../../../screens/chat_screen/data/message_model.dart';
 
 /// =============================Important====================================
 /// The model of data using this class must override
