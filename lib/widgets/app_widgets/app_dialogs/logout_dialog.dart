@@ -84,7 +84,7 @@ void scaleAlertDialog({
                   text: body,
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
-                  maxLines: 5,
+                  maxLines: 2,
                 ),
                 backgroundColor: context.kBackgroundColor,
                 // contentPadding: EdgeInsets.zero,

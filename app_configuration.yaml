@@ -1,3 +1,12 @@
+
+# rename app  https://pub.dev/packages/rename 
+# run the following commands to rename the application
+flutter pub global activate rename
+rename setAppName --targets ios,android --value "Resturant"
+rename setBundleId --targets android --value "com.resturant.app"
+rename setBundleId --targets ios --value "com.resturant.app"
+#
+#
 # firebase configuration
 # run the following commands to configure the firebase configuration
   dart pub global activate flutterfire_cli
@@ -9,12 +18,6 @@
 #
 #
 #
-# rename app  https://pub.dev/packages/rename 
-# run the following commands to rename the application
- flutter pub global activate rename
- rename setAppName --targets ios,android --value "Resturant"
- rename setBundleId --targets android --value "com.resturant.app"
- rename setBundleId --targets ios --value "com.resturant.app"
 #
 #
 #

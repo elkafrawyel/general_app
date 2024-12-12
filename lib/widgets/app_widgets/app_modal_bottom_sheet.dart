@@ -10,8 +10,9 @@ showAppModalBottomSheet({
   double minChildSize = 0.4,
   double maxChildSize = 0.9,
 }) {
-  showBottomSheet(
+  showModalBottomSheet(
     context: context,
+    isScrollControlled: true,
     backgroundColor: Colors.transparent,
     builder: (context) => GestureDetector(
       behavior: HitTestBehavior.opaque,

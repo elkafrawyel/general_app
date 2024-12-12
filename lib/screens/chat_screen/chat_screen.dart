@@ -28,6 +28,7 @@ class _ChatScreenState extends State<ChatScreen> with FCMNotificationMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      backgroundColor: context.kBackgroundColor,
       appBar: const AppAppbar(
         title: 'User Name',
         centerTitle: false,
@@ -66,6 +67,7 @@ class _ChatScreenState extends State<ChatScreen> with FCMNotificationMixin {
                   ? 'اكتب رسالتك هنا'
                   : 'Type your message here',
               sendButtonColor: context.kPrimaryColor,
+              messageBarColor: context.kBackgroundColor,
               onSend: (String message) => _addMessage(message),
               actions: [
                 InkWell(
