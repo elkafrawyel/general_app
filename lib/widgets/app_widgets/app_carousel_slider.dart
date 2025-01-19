@@ -60,7 +60,7 @@ class _AppCarouselSliderState extends State<AppCarouselSlider> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: context.kPrimaryColor
-                      .withOpacity(_current == entry.key ? 0.9 : 0.4),
+                      .withValues(alpha: _current == entry.key ? 0.9 : 0.4),
                 ),
               ),
             );

@@ -49,8 +49,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController textEditingController = TextEditingController();
-  GlobalKey<AppTextFormFieldState> textFormState =
-      GlobalKey<AppTextFormFieldState>();
+  GlobalKey<AppTextFormFieldState> textFormState = GlobalKey<AppTextFormFieldState>();
 
   File? image;
 
@@ -96,8 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: AppNetworkImage(
                   isCircular: true,
                   localFile: image,
-                  imageUrl:
-                      'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
+                  imageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
                 ),
                 title: 'New Tile Title',
                 onTap: () {
@@ -153,8 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Open Url',
                     onPressed: () {
                       Get.to(
-                        () => const AppWebview(
-                            title: 'Google', url: 'https://www.google.com'),
+                        () => const AppWebview(title: 'Google', url: 'https://www.google.com'),
                       );
                     },
                   ),
@@ -189,8 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       showLogoutAlertDialog(context, () {
                         Get.back();
-                        InformationViewer.showSuccessToast(
-                            msg: 'Logging out of the application');
+                        InformationViewer.showSuccessToast(msg: 'Logging out of the application');
                       });
                     },
                   ),
@@ -200,8 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       showDeleteAccountAlertDialog(context, () {
                         Get.back();
-                        InformationViewer.showSuccessToast(
-                            msg: 'Deleting your account');
+                        InformationViewer.showSuccessToast(msg: 'Deleting your account');
                       });
                     },
                   ),
@@ -247,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              AppDropDownMenu(
+              AppDropMenu(
                 hint: 'Select Country',
                 // leading: Image.network(
                 // 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/2560px-Flag_of_Canada.svg.png',
@@ -313,8 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Validate',
                 onPressed: () {
                   textFormState.currentState?.shake();
-                  textFormState.currentState
-                      ?.setHelperText('Email in no longer valid');
+                  textFormState.currentState?.setHelperText('Email in no longer valid');
                 },
               ),
               Row(
@@ -322,8 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppButton(
                     text: 'Get Time',
                     onPressed: () {
-                      String time = DateHelper()
-                          .getTimeFromDateString('2024-09-06 07:35:40');
+                      String time = DateHelper().getTimeFromDateString('2024-09-06 07:35:40');
                       AppLogger.log(time);
                     },
                   ),
@@ -331,8 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppButton(
                     text: 'Get Date',
                     onPressed: () {
-                      String time = DateHelper()
-                          .getDateFromDateString('2024-09-06 07:35:40');
+                      String time = DateHelper().getDateFromDateString('2024-09-06 07:35:40');
                       AppLogger.log(time);
                     },
                   ),
@@ -364,8 +356,7 @@ class _HomeScreenState extends State<HomeScreen> {
       initialChildSize: 0.3,
       minChildSize: 0.2,
       builder: (context, scrollerController) {
-        final TextEditingController textEditingController =
-            TextEditingController();
+        final TextEditingController textEditingController = TextEditingController();
         return Container(
           color: context.kBackgroundColor,
           child: SingleChildScrollView(

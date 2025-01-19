@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:general_app/config/theme/color_extension.dart';
 
 import 'app_text.dart';
 
-class AppDropDownMenu<T> extends StatefulWidget {
+class AppDropMenu<T> extends StatefulWidget {
   final List<T> items;
   final Function(T?) onChanged;
   final String hint;
@@ -14,9 +13,8 @@ class AppDropDownMenu<T> extends StatefulWidget {
   final Color? backgroundColor;
   final bool centerHint;
   final String? validationText;
-  final Widget? leading;
 
-  const AppDropDownMenu({
+  const AppDropMenu({
     super.key,
     this.initialValue,
     required this.hint,
@@ -24,18 +22,17 @@ class AppDropDownMenu<T> extends StatefulWidget {
     required this.onChanged,
     this.bordered = false,
     this.radius = 8,
-    this.expanded = false,
+    this.expanded = true,
     this.backgroundColor,
     this.centerHint = false,
     this.validationText,
-    this.leading,
   });
 
   @override
-  State<AppDropDownMenu<T>> createState() => AppDropDownMenuState<T>();
+  State<AppDropMenu<T>> createState() => AppDropMenuState<T>();
 }
 
-class AppDropDownMenuState<T> extends State<AppDropDownMenu<T>> {
+class AppDropMenuState<T> extends State<AppDropMenu<T>> {
   T? selectedItem;
   FormFieldState<Object?>? formFieldState;
 
@@ -51,10 +48,61 @@ class AppDropDownMenuState<T> extends State<AppDropDownMenu<T>> {
     });
   }
 
+  void updateSelection(T? item) {
+    setState(() {
+      selectedItem = item;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FormField(
+    return DropdownButtonFormField<T>(
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      value: selectedItem,
+      dropdownColor: Colors.white,
+      hint: Align(
+        alignment: widget.centerHint ? AlignmentDirectional.center : AlignmentDirectional.centerStart,
+        child: AppText(
+          text: selectedItem == null ? widget.hint : selectedItem.toString(),
+          maxLines: 1,
+          color: const Color(0xff6E7C91),
+          fontSize: 12.62,
+        ),
+      ),
+      decoration: widget.bordered
+          ? InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
+                borderSide: const BorderSide(
+                  width: 0.5,
+                  color: Color(0xffCED7E3),
+                ),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
+                borderSide: const BorderSide(
+                  width: 1,
+                  color: Color(0xffCED7E3),
+                ),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(widget.radius),
+                borderSide: const BorderSide(
+                  width: 1,
+                  color: Colors.red,
+                ),
+              ),
+              fillColor: widget.backgroundColor,
+            )
+          : InputDecoration(
+              fillColor: widget.backgroundColor,
+              border: const OutlineInputBorder(
+                borderSide: BorderSide.none,
+              ),
+            ),
+      isExpanded: widget.expanded,
+      iconSize: 25,
+      icon: const Icon(Icons.keyboard_arrow_down),
       validator: (value) {
         if (value == null) {
           return widget.validationText;
@@ -62,95 +110,27 @@ class AppDropDownMenuState<T> extends State<AppDropDownMenu<T>> {
           return null;
         }
       },
-      builder: ((formFieldState) {
-        this.formFieldState = formFieldState;
-        bool hasError =
-            formFieldState.hasError && widget.validationText != null;
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              decoration: widget.bordered
-                  ? BoxDecoration(
-                      borderRadius: BorderRadius.circular(widget.radius),
-                      border: Border.all(
-                        width: 1,
-                        color: hasError
-                            ? context.kErrorColor
-                            : context.kPrimaryColor,
-                      ),
-                      color: widget.backgroundColor ?? context.kBackgroundColor,
-                    )
-                  : BoxDecoration(
-                      color: widget.backgroundColor ?? context.kBackgroundColor,
-                    ),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: DropdownButton<T>(
-                value: selectedItem,
-                dropdownColor: context.kBackgroundColor,
-                hint: Align(
-                  alignment: widget.centerHint
-                      ? AlignmentDirectional.center
-                      : AlignmentDirectional.centerStart,
+      items: widget.items.isEmpty
+          ? []
+          : widget.items
+              .map(
+                (e) => DropdownMenuItem<T>(
+                  value: widget.items[widget.items.indexOf(e)],
                   child: AppText(
-                    text: selectedItem == null
-                        ? widget.hint
-                        : selectedItem.toString(),
-                    maxLines: 1,
-                    color: context.kHintTextColor,
-                  ),
-                ),
-                isExpanded: widget.expanded,
-                iconSize: 25,
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: context.kTextColor,
-                ),
-                underline: const SizedBox(),
-                items: widget.items.isEmpty
-                    ? []
-                    : widget.items
-                        .map(
-                          (e) => DropdownMenuItem<T>(
-                            value: widget.items[widget.items.indexOf(e)],
-                            child: Row(
-                              children: [
-                                widget.leading ?? const SizedBox(),
-                                Expanded(
-                                  child: AppText(
-                                    text: e.toString(),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    selectedItem = value;
-                  });
-                  widget.onChanged(value);
-                },
-              ),
-            ),
-            if (hasError)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, top: 10),
-                child: Text(
-                  '${formFieldState.errorText} *',
-                  style: TextStyle(
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.normal,
-                    color: context.kErrorColor,
+                    text: e.toString(),
+                    fontSize: 12.62,
+                    fontWeight: FontWeight.w700,
+                    color: const Color(0xff6E7C91),
                   ),
                 ),
               )
-          ],
-        );
-      }),
+              .toList(),
+      onChanged: (value) {
+        setState(() {
+          selectedItem = value;
+        });
+        widget.onChanged(value);
+      },
     );
   }
 }

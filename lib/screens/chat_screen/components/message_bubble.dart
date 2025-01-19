@@ -64,7 +64,7 @@ class _MessageBubbleState extends State<MessageBubble> {
             text: widget.messageModel.title ?? '',
             color: isCurrentUser
                 ? context.kPrimaryColor
-                : context.kHintTextColor.withOpacity(0.3),
+                : context.kHintTextColor.withValues(alpha: 0.3),
             tail: true,
             isSender: isCurrentUser,
             textStyle: const TextStyle(

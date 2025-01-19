@@ -1,5 +1,5 @@
 import 'package:chat_bubbles/chat_bubbles.dart';
-import 'package:firebase_messaging_platform_interface/src/remote_message.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
 import 'package:general_app/config/notifications/notification_mixin.dart';
