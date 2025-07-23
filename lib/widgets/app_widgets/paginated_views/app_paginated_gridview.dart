@@ -55,9 +55,7 @@ class _AppPaginatedGridviewState<T> extends State<AppPaginatedGridView<T>> {
       builder: (controller) {
         return HandleApiState.apiResult(
           apiResult: controller.apiResult,
-          shimmerLoader: widget.shimmerLoading == null
-              ? null
-              : GridView.builder(
+          shimmerLoader: widget.shimmerLoading ?? GridView.builder(
                   controller: _scrollController,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: widget.crossAxisCount,

@@ -13,8 +13,8 @@ class PaginationController<T> extends GetxController {
   bool isLastPage = false;
   bool _loadingMore = false, _loadingMoreEnd = false;
   bool paginate = true;
-  final _page = 'pageNumber';
-  final _perPage = 'pageSize';
+  final _page = 'page';
+  final _perPage = 'per_page';
   final _paginate = 'paginate';
 
   PaginationResponse<T>? paginationResponse;

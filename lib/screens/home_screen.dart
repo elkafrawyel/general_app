@@ -49,7 +49,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController textEditingController = TextEditingController();
-  GlobalKey<AppTextFormFieldState> textFormState = GlobalKey<AppTextFormFieldState>();
+  GlobalKey<AppTextFormFieldState> textFormState =
+      GlobalKey<AppTextFormFieldState>();
 
   File? image;
 
@@ -75,16 +76,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: AppBottomNav(
-        navBarItems: [
-          NavBarItem(text: 'Home', assetName: Res.emailIcon),
-          NavBarItem(text: 'Messages', assetName: Res.emailIcon),
-          NavBarItem(text: 'Orders', assetName: Res.emailIcon),
-          NavBarItem(text: 'Notifications', assetName: Res.emailIcon),
-          NavBarItem(text: 'Menu', assetName: Res.emailIcon),
-        ],
-        onTap: (int index) {},
-      ),
+      // bottomNavigationBar: AppBottomNav(
+      //   navBarItems: [
+      //     NavBarItem(text: 'Home', assetName: Res.emailIcon),
+      //     NavBarItem(text: 'Messages', assetName: Res.emailIcon),
+      //     NavBarItem(text: 'Orders', assetName: Res.emailIcon),
+      //     NavBarItem(text: 'Notifications', assetName: Res.emailIcon),
+      //     NavBarItem(text: 'Menu', assetName: Res.emailIcon),
+      //   ],
+      //   onTap: (int index) {},
+      // ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18.0),
@@ -95,13 +96,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 leading: AppNetworkImage(
                   isCircular: true,
                   localFile: image,
-                  imageUrl: 'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
+                  imageUrl:
+                      'https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg',
                 ),
                 title: 'New Tile Title',
                 onTap: () {
                   InformationViewer.showSuccessToast(msg: 'List Tile Clicked');
                 },
                 body: 'New Tile body for the list tile title ',
+              ),
+              30.ph,
+              AppButton(
+                onPressed: () {
+                  Get.bottomSheet(
+                    BottomSheetContent(),
+                    isScrollControlled: true,
+                    // Ensures keyboard does not hide content
+                    backgroundColor: Colors.white,
+                  );
+                },
+                text: "Open BottomSheet",
               ),
               Row(
                 children: [
@@ -151,7 +165,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Open Url',
                     onPressed: () {
                       Get.to(
-                        () => const AppWebview(title: 'Google', url: 'https://www.google.com'),
+                        () => const AppWebview(
+                            title: 'Google', url: 'https://www.google.com'),
                       );
                     },
                   ),
@@ -186,7 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       showLogoutAlertDialog(context, () {
                         Get.back();
-                        InformationViewer.showSuccessToast(msg: 'Logging out of the application');
+                        InformationViewer.showSuccessToast(
+                            msg: 'Logging out of the application');
                       });
                     },
                   ),
@@ -196,7 +212,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       showDeleteAccountAlertDialog(context, () {
                         Get.back();
-                        InformationViewer.showSuccessToast(msg: 'Deleting your account');
+                        InformationViewer.showSuccessToast(
+                            msg: 'Deleting your account');
                       });
                     },
                   ),
@@ -225,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Get.to(() => const NotificationsScreen());
                     },
-                    text: 'Paginated ListView',
+                    text: 'Notifications Screen',
                   ),
                   10.pw,
                   AppButton(
@@ -308,7 +325,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: 'Validate',
                 onPressed: () {
                   textFormState.currentState?.shake();
-                  textFormState.currentState?.setHelperText('Email in no longer valid');
+                  textFormState.currentState
+                      ?.setHelperText('Email in no longer valid');
                 },
               ),
               Row(
@@ -316,7 +334,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppButton(
                     text: 'Get Time',
                     onPressed: () {
-                      String time = DateHelper().getTimeFromDateString('2024-09-06 07:35:40');
+                      String time = DateHelper()
+                          .getTimeFromDateString('2024-09-06 07:35:40');
                       AppLogger.log(time);
                     },
                   ),
@@ -324,7 +343,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppButton(
                     text: 'Get Date',
                     onPressed: () {
-                      String time = DateHelper().getDateFromDateString('2024-09-06 07:35:40');
+                      String time = DateHelper()
+                          .getDateFromDateString('2024-09-06 07:35:40');
                       AppLogger.log(time);
                     },
                   ),
@@ -356,7 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
       initialChildSize: 0.3,
       minChildSize: 0.2,
       builder: (context, scrollerController) {
-        final TextEditingController textEditingController = TextEditingController();
+        final TextEditingController textEditingController =
+            TextEditingController();
         return Container(
           color: context.kBackgroundColor,
           child: SingleChildScrollView(
@@ -393,6 +414,52 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+class BottomSheetContent extends StatelessWidget {
+  final TextEditingController textController = TextEditingController();
+
+  BottomSheetContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: 16,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Enter Text",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 10),
+          TextFormField(
+            controller: textController,
+            decoration: const InputDecoration(
+              labelText: "Type here",
+              border: OutlineInputBorder(),
+            ),
+          ),
+          const SizedBox(height: 10),
+          AppButton(
+            onPressed: () {
+              Get.back(); // Close the bottom sheet
+              Get.snackbar(
+                "Input",
+                "You entered: ${textController.text}",
+                snackPosition: SnackPosition.BOTTOM,
+                isDismissible: false
+              );
+            },
+            text: "Submit",
+          ),
+        ],
+      ),
     );
   }
 }

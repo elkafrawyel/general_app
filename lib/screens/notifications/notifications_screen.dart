@@ -30,10 +30,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         padding: const EdgeInsets.all(8.0),
         child: AppPaginatedListview<NotificationModel>(
           configData: ConfigData<NotificationModel>(
-            apiEndPoint: Res.apiNotifications,
+            apiEndPoint: 'posts',
             emptyListMessage: 'empty_notifications'.tr,
             fromJson: NotificationModel.fromJson,
-            isPostRequest: true,
           ),
           child: (NotificationModel item) => NotificationCardView(
             notificationModel: item,

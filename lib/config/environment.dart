@@ -1,9 +1,9 @@
 class Environment {
   static const AppMode appMode = AppMode.live;
   final String _liveBaseUrl =
-      'http://mohammedzakii-001-site3.htempurl.com/api/';
+      'https://jsonplaceholder.typicode.com/';
   final String _testBaseUrl =
-      'http://mohammedzakii-001-site3.htempurl.com/api/';
+      'https://jsonplaceholder.typicode.com/';
 
   url() {
     switch (appMode) {
