@@ -20,7 +20,7 @@ import 'package:general_app/widgets/app_widgets/app_text.dart';
 import 'package:general_app/widgets/app_widgets/app_text_field/app_text_field.dart';
 import 'package:get/get.dart';
 
-import '../config/helpers/logging_helper.dart';
+import '../config/helpers/app_logger.dart';
 import 'notifications/notifications_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   10.pw,
                   AppButton(
                     onPressed: () {
-                      AppLogger.log('This is a  new log message');
+                      AppLogger.info('This is a  new log message');
                     },
                     text: 'Log message',
                   ),
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       String time = DateHelper()
                           .getTimeFromDateString('2024-09-06 07:35:40');
-                      AppLogger.log(time);
+                      AppLogger.info(time);
                     },
                   ),
                   10.pw,
@@ -174,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       String time = DateHelper()
                           .getDateFromDateString('2024-09-06 07:35:40');
-                      AppLogger.log(time);
+                      AppLogger.info(time);
                     },
                   ),
                 ],
@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Option 5',
                 ],
                 onChanged: (String? value) {
-                  AppLogger.log(value);
+                  AppLogger.info(value!);
                 },
               ),
             ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:general_app/config/extension/space_extension.dart';
-import 'package:general_app/config/helpers/logging_helper.dart';
 import 'package:general_app/screens/notifications/data/notification_model.dart';
 import 'package:general_app/widgets/app_widgets/app_text.dart';
 
+import '../../../config/helpers/app_logger.dart';
 import '../../../widgets/app_widgets/app_card.dart';
 
 class NotificationCardView extends StatelessWidget {
@@ -18,7 +18,7 @@ class NotificationCardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        AppLogger.log(notificationModel.title ?? '');
+        AppLogger.info(notificationModel.title ?? '');
       },
       child: AppCard(
         child: Padding(

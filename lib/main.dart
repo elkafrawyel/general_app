@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 
 import 'config/constants.dart';
 import 'config/environment.dart';
+import 'config/helpers/app_logger.dart';
 import 'config/language/translation.dart';
 import 'config/theme/theme_controller.dart';
 
@@ -41,6 +42,12 @@ void main() async {
   );
 
   await StorageClient().init();
+  AppLogger.info('App Started');
+  AppLogger.success('App Started');
+  AppLogger.warning('App Started');
+  AppLogger.error('App Started');
+  AppLogger.debug('App Started');
+
   runApp(const MyApp());
 }
 

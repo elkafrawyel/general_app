@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:general_app/config/clients/storage/storage_client.dart';
-import 'package:general_app/config/helpers/logging_helper.dart';
 import 'package:general_app/config/theme/color_extension.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../config/helpers/app_logger.dart';
 import 'app_text.dart';
 
 showAppImageDialog({
@@ -97,7 +97,7 @@ class _ImagePickerDialog extends StatelessWidget {
                   onFilePicked(imageFile);
                 }
               } catch (e) {
-                AppLogger.log(e.toString());
+                AppLogger.error(e.toString());
               }
             },
           ),
